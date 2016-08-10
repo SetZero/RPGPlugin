@@ -1,0 +1,4 @@
+name: EnchantmentPlugin
+main: eu.around_me.rpgplugin.RPGPluginMain
+version: 0.1
+commands:
