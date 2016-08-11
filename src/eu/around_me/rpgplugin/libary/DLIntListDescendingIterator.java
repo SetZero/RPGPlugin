@@ -10,13 +10,18 @@ class DLIntListDescendingIterator {
 		mycurrnode = node;
 	}
 	public boolean hasNext() {
-		if(mycurrnode.getPrev() != dummy) {
-			return true;
+		if(mycurrnode.getPrev().length > 0) {
+			if(mycurrnode.getPrev()[0] != dummy) {
+				return true;
+			}
 		}
 		return false;
 	}
-	public int next() {
-		mycurrnode = mycurrnode.getPrev();
-		return mycurrnode.getValue();
+	public DNode[] next(DNode nextelement) throws Exception {
+		if(!hasNext()) {
+			throw new Exception();
+		}
+		mycurrnode = nextelement;
+		return mycurrnode.getPrev();
 	}
 }
