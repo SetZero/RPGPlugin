@@ -1,11 +1,15 @@
 package eu.around_me.rpgplugin.libary;
 
-public class Skill {
-	private int value;
-	public int getValue() {
-		return value;
+public abstract class Skill {
+	private static int idcounter = 0;
+	private int id = 0;
+	
+	public Skill() {
+		id = idcounter;
+		idcounter++;
 	}
-	public void setValue(int value) {
-		this.value = value;
+	public int getID() {
+		return id;
 	}
+	public abstract String getName();
 }
