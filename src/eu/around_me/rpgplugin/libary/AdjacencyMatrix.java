@@ -1,6 +1,9 @@
 package eu.around_me.rpgplugin.libary;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import skills.Skill;
 
 public class AdjacencyMatrix {
 	private int n;
@@ -9,6 +12,10 @@ public class AdjacencyMatrix {
     public AdjacencyMatrix(int n0) {
     	n = n0;
         a = new Skill[n0][n0];
+    }
+    
+    public Skill getSkill(int i, int j) {
+    	return a[i][j];
     }
     
     public void addEdge(Skill sk, int i, int j) {
@@ -64,5 +71,36 @@ public class AdjacencyMatrix {
         for (int j = 0; j < n; j++)
             if (a[j][i] != null) edges.add(a[j][i]);
         return edges;
+    }
+    
+    public boolean isInstance(Skill s) {
+    	for(int i=0;i<n;i++) {
+    		for(int j=0;j<=i;j++) {
+    			if(s == a[i][j])
+    				return true;
+    		}
+    	}
+    	return false;
+    }
+    
+    public int[] getPosition(Skill s) {
+    	for(int i=0;i<n;i++) {
+    		for(int j=0;j<=i;j++) {
+    			if(s == a[i][j]){
+    				int[] ret = {i, j};
+    				return ret;
+    			}
+    		}
+    	}
+    	int[] ret = {-1};
+    	return ret;
+    }
+    
+    public boolean isLearned(Skill s) {
+    	for(int i=0;i<n;i++) {
+    		if(s == a[s.getID()][i])
+    			return true;
+    	}
+    	return false;
     }
 }
