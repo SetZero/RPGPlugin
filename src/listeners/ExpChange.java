@@ -17,6 +17,10 @@ import playerstats.RPGPlayerStat;
 public class ExpChange implements Listener{
 
 	private Map<HumanEntity, RPGPlayerStat> playerStats;
+	//variable which increments after an levelup -- used to adjust the expToLevelUp variable
+	private int scale = 1;
+	//variable to calculate the new expToLevelUp variable, after executing levelUp()
+	private int puffer = 7;
 	
 	public ExpChange(Map<HumanEntity, RPGPlayerStat> playerStats) {
 		this.playerStats = playerStats;
@@ -29,22 +33,20 @@ public class ExpChange implements Listener{
 		RPGPlayerStat stat = playerStats.get(p);
 		if(stat != null) {
 			if(event.getAmount() > 0) {
-				stat.setEXP(stat.getEXP() + event.getAmount());
-			}
 			
-			//set the new Exp with:
-			stat.setEXP(stat.getEXP() + (int) (event.getAmount()/2));
+				//set the new Exp with:
+				stat.setEXP(stat.getEXP() + (event.getAmount()/2));
 			
-			//check for levelup
-			if(stat.getEXP() >= stat.getExpToLevelUp()) {
-				//reset exp and execute levelUp() -- without that fancy methods: exp%=expToLevelUp;
-				stat.setEXP(stat.getEXP()%stat.getExpToLevelUp());
-				stat.levelUp();
+				//check for levelup:
+				if(stat.getEXP() >= stat.getExpToLevelUp()) {
+					//reset current exp and execute levelUp()
+					stat.setEXP(stat.getEXP()%stat.getExpToLevelUp());
+					stat.levelUp();
+					//set new expToLevelUp cap
+					stat.setExpToLevelUp((scale*32) * (puffer/8) -  ((scale-1)*32) * ((puffer-1)/8));
+					scale ++;
 				
-				//TODO: set new expToLevelUp cap!!!!
-				//IDEAS: after executing levelUp() add a line (in levelUp()) to change the new expToLevelUp.
-				//OR implement an algorithm which will be incremented every time setExpToLevelUp() is executed.
-				//stat.setExpToLevelUp((stat.getExpToLevelUp()i*20)/3);
+				}
 			}
 		}
     }
