@@ -31,6 +31,21 @@ public class ExpChange implements Listener{
 			if(event.getAmount() > 0) {
 				stat.setEXP(stat.getEXP() + event.getAmount());
 			}
+			
+			//set the new Exp with:
+			stat.setEXP(stat.getEXP() + (int) (event.getAmount()/2));
+			
+			//check for levelup
+			if(stat.getEXP() >= stat.getExpToLevelUp()) {
+				//reset exp and execute levelUp() -- without that fancy methods: exp%=expToLevelUp;
+				stat.setEXP(stat.getEXP()%stat.getExpToLevelUp());
+				stat.levelUp();
+				
+				//TODO: set new expToLevelUp cap!!!!
+				//IDEAS: after executing levelUp() add a line (in levelUp()) to change the new expToLevelUp.
+				//OR implement an algorithm which will be incremented every time setExpToLevelUp() is executed.
+				//stat.setExpToLevelUp((stat.getExpToLevelUp()i*20)/3);
+			}
 		}
     }
 }
