@@ -23,6 +23,9 @@ public class RPGPlayerStat {
 	//TRYOUT: expToLevelUp -- Exp needed to levelup and get skillpoints
 	pivate int expToLevelUp = 0;
 	
+	//scale for the expToLevelUp var, which changes everytime levelUp() is executed
+	private int scale = 1;
+	
 	List<Skill> learned = new ArrayList<Skill>();
 	AdjacencyMatrix skillTree;
 	
@@ -68,6 +71,7 @@ public class RPGPlayerStat {
 	public void levelUp() {
 		skillpoints++; //TODO: not a static value
 		level++;
+		//insert algorithm for expToLevelUp variable here
 	}
 	
 	//method to set levelup-cap -- place where we could put an algorithm
@@ -136,7 +140,7 @@ public class RPGPlayerStat {
 		
 		
 	}
-	
+
 	//CHECK FOR EXPCHANGE EXP LEVELUP
 	@EventHandler  (priority = EventPriority.HIGHEST)
 	private gainxp(PlayerExpChangeEvent event) {
@@ -153,7 +157,6 @@ public class RPGPlayerStat {
 			//TODO: set new expToLevelUp cap!!!!
 			//IDEAS: after executing levelUp() add a line (in levelUp()) to change the new expToLevelUp.
 			//OR implement an algorithm which will be incremented every time setExpToLevelUp() is executed.
-			expToLevelUp+= (i*20)/3;
 		};
 	}
 		
