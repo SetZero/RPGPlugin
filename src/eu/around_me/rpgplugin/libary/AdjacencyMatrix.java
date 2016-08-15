@@ -5,6 +5,12 @@ import java.util.List;
 
 import skills.Skill;
 
+
+/**
+ * Creates an Adjacency matrix (https://en.wikipedia.org/wiki/Adjacency_matrix) to connect the Skill nodes
+ * @author Sebastian
+ * @version 0.0.1
+ */
 public class AdjacencyMatrix {
 	private int n;
     private Skill[][] a;

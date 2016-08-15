@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.bukkit.entity.HumanEntity;
 import eu.around_me.rpgplugin.libary.AdjacencyMatrix;
-import eu.around_me.rpgplugin.libary.SkillPoints;
 import net.md_5.bungee.api.ChatColor;
 import skills.PassiveSkillPoint;
 import skills.Skill;
@@ -71,8 +70,34 @@ public class RPGPlayerStat {
 		return exp;
 	}
 	
+	public List<Skill> getLearnedSkills() {
+		return learned;
+	}
+	
 	public AdjacencyMatrix getSkillTree() {
 		return skillTree;
+	}
+	
+	public boolean learnSkill(Skill learn) {
+		if(skillpoints >= 1) {
+			if(!learned.contains(learn)) {
+				if(learn == null) return false;
+				Skill[] req = learn.getRequirements();
+				for(Skill reqskill : req) {
+					if(!learned.contains(reqskill))
+						return false;
+				}
+				
+				learned.add(learn);
+				skillpoints--;
+				if(learn instanceof PassiveSkillPoint) {
+					PassiveSkillPoint p = (PassiveSkillPoint) learn;
+					p.learnSkill(this);
+				}
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public boolean learnSkill(int skillid, int position) {
@@ -95,6 +120,7 @@ public class RPGPlayerStat {
 				skillpoints--;
 				
 				//TODO: Make this less static....
+				//Call learnSkill from skill class
 				if(learn instanceof PassiveSkillPoint) {
 					PassiveSkillPoint p = (PassiveSkillPoint) learn;
 					p.learnSkill(this);

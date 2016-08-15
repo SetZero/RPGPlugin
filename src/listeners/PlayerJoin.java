@@ -11,6 +11,11 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import eu.around_me.rpgplugin.libary.AdjacencyMatrix;
 import playerstats.RPGPlayerStat;
 
+/**
+ * Register all Players which join the Server and gives them a RPGPlayerStat Object
+ * @author Sebastian
+ *
+ */
 public class PlayerJoin implements Listener{
 	
 	private Map<HumanEntity, RPGPlayerStat> playerStats;

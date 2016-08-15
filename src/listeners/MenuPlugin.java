@@ -11,6 +11,11 @@ import org.bukkit.plugin.Plugin;
 import menus.MainMenu;
 import playerstats.RPGPlayerStat;
 
+/**
+ * Creates Listener for Main Menu
+ * @author Sebastian
+ *
+ */
 public class MenuPlugin implements Listener{
 	private MainMenu menu;
 

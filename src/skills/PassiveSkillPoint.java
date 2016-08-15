@@ -1,15 +1,13 @@
 package skills;
 
-import java.util.Map;
-
 import org.bukkit.DyeColor;
-import org.bukkit.entity.HumanEntity;
 
+import eu.around_me.rpgplugin.libary.PassiveSkillEffects;
 import eu.around_me.rpgplugin.libary.SkillPoints;
 import net.md_5.bungee.api.ChatColor;
 import playerstats.RPGPlayerStat;
 
-public class PassiveSkillPoint extends Skill {
+public class PassiveSkillPoint extends PassiveSkill {
 	SkillPoints type;
 	Skill[] requirements;
 	String name;
@@ -135,6 +133,13 @@ public class PassiveSkillPoint extends Skill {
 		} else if(type == SkillPoints.STR) {
 			stat.setStr(stat.getStr() + 1);
 		} 
+	}
+
+	@Override
+	public void setSkillEffect(PassiveSkillEffects effect) {
+		if(effect == PassiveSkillEffects.WALK) {
+			
+		}
 	}
 
 

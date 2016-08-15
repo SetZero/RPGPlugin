@@ -9,6 +9,11 @@ import org.bukkit.event.player.PlayerExpChangeEvent;
 
 import playerstats.RPGPlayerStat;
 
+/**
+ * EXP Change listener, so that MC EXP and other EXP are indipendent
+ * @author Sebastian
+ *
+ */
 public class ExpChange implements Listener{
 
 	private Map<HumanEntity, RPGPlayerStat> playerStats;
