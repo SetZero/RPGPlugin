@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.player.PlayerExpChangeEvent;
-
 import eu.around_me.rpgplugin.libary.AdjacencyMatrix;
 import net.md_5.bungee.api.ChatColor;
 import skills.PassiveSkillPoint;
@@ -20,6 +18,9 @@ public class RPGPlayerStat {
 	private int exp = 0;
 	//TRYOUT: expToLevelUp -- Exp needed to levelup and get skillpoints
 	private int expToLevelUp = 0;
+	
+	//scale for the expToLevelUp var, which changes everytime levelUp() is executed
+	private int scale = 1;
 	
 	List<Skill> learned = new ArrayList<Skill>();
 	AdjacencyMatrix skillTree;
@@ -66,6 +67,7 @@ public class RPGPlayerStat {
 	public void levelUp() {
 		skillpoints++; //TODO: not a static value
 		level++;
+		//insert algorithm for expToLevelUp variable here
 	}
 	
 	//method to set levelup-cap -- place where we could put an algorithm
@@ -160,9 +162,5 @@ public class RPGPlayerStat {
 		
 		
 		
-	}
-		
-		
-
-	
+	}	
 }
