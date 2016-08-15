@@ -3,6 +3,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.player.PlayerExpChangeEvent;
+
 import eu.around_me.rpgplugin.libary.AdjacencyMatrix;
 import net.md_5.bungee.api.ChatColor;
 import skills.PassiveSkillPoint;
@@ -15,6 +18,10 @@ public class RPGPlayerStat {
 	private int level = 0;
 	private int skillpoints = 0;
 	private int exp = 0;
+	
+	//TRYOUT: expToLevelUp -- Exp needed to levelup and get skillpoints
+	pivate int expToLevelUp = 0;
+	
 	List<Skill> learned = new ArrayList<Skill>();
 	AdjacencyMatrix skillTree;
 	
@@ -62,7 +69,17 @@ public class RPGPlayerStat {
 		level++;
 	}
 	
+	//method to set levelup-cap -- place where we could put an algorithm
+	public void setExpToLevelUp(int cap){
+		this.expToLevelUp = cap;
+	}
+	//method to get expToLevelup
+	public void getExpToLevelUp(){
+		return expToLevelUp;
+	}
+	
 	public void setEXP(int exp) {
+		
 		this.exp = exp;
 	}
 	
@@ -145,6 +162,28 @@ public class RPGPlayerStat {
 		
 		
 	}
+	
+	//CHECK FOR EXPCHANGE EXP LEVELUP
+	@EventHandler  (priority = EventPriority.HIGHEST)
+	private gainxp(PlayerExpChangeEvent event) {
+		
+		//set the new Exp with:
+		setEXP(getEXP() + (int) (event.getAmount()/2));
+		
+		//check for levelup
+		if(getEXP() >= getExpToLevelUp()) {
+			//reset exp and execute levelUp() -- without that fancy methods: exp%=expToLevelUp;
+			setEXP(getEXP%expToLevelUp);
+			levelUp();
+			
+			//TODO: set new expToLevelUp cap!!!!
+			//IDEAS: after executing levelUp() add a line (in levelUp()) to change the new expToLevelUp.
+			//OR implement an algorithm which will be incremented every time setExpToLevelUp() is executed.
+			expToLevelUp+= (i*20)/3;
+		};
+	}
+		
+		
 
 	
 }
