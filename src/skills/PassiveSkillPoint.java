@@ -2,10 +2,11 @@ package skills;
 
 import org.bukkit.DyeColor;
 
-import eu.around_me.rpgplugin.libary.PassiveSkillEffects;
 import eu.around_me.rpgplugin.libary.SkillPoints;
 import net.md_5.bungee.api.ChatColor;
 import playerstats.RPGPlayerStat;
+import skilleffects.points.Dexterity;
+import skilleffects.points.Strength;
 
 public class PassiveSkillPoint extends PassiveSkill {
 	SkillPoints type;
@@ -14,6 +15,9 @@ public class PassiveSkillPoint extends PassiveSkill {
 	String description;
 	ChatColor color;
 	DyeColor itemColor;
+	boolean requiresPreviousSkills;
+	int previousSkillAmount;
+	private PassiveSkillEffects effect;
 	
 	public PassiveSkillPoint(SkillPoints type, Skill[] requirements) {
 		this.type = type;
@@ -92,12 +96,12 @@ public class PassiveSkillPoint extends PassiveSkill {
 	}
 	
 	@Override
-	public void setRequirements(Skill[] requirements) {
+	public void setSkillRequirements(Skill[] requirements) {
 		this.requirements = requirements;
 	}
 
 	@Override
-	public Skill[] getRequirements() {
+	public Skill[] getSkillRequirements() {
 		return requirements;
 	}
 	
@@ -137,10 +141,39 @@ public class PassiveSkillPoint extends PassiveSkill {
 
 	@Override
 	public void setSkillEffect(PassiveSkillEffects effect) {
-		if(effect == PassiveSkillEffects.WALK) {
-			
+		this.effect = effect;
+	}
+	
+	@Override
+	public PassiveSkillEffects getSkillEffect() {
+		switch(type) {
+			case STR:
+				return new Strength();
+			case DEX:
+				return new Dexterity();
+			case INT:
+				return null;
+			default:
+				return effect;
 		}
 	}
+
+	@Override
+	public void setNodeRequirements(boolean prevReq, int prevAmount) {
+		this.requiresPreviousSkills = prevReq;
+		this.previousSkillAmount = prevAmount;
+		
+	}
+
+	@Override
+	public int getNodeRequirements() {
+		if(!requiresPreviousSkills)
+			return 0;
+		else
+			return previousSkillAmount;
+	}
+
+
 
 
 }

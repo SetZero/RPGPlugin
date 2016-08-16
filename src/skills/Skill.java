@@ -19,6 +19,9 @@ public abstract class Skill {
 	public abstract String setDescription(String desc);
 	public abstract ChatColor getChatColor();
 	public abstract void setChatColor(ChatColor color);
-	public abstract void setRequirements(Skill[] req);
-	public abstract Skill[] getRequirements();
+	public abstract void setSkillRequirements(Skill[] req);
+	public abstract Skill[] getSkillRequirements();
+	public abstract void setNodeRequirements(boolean prevReq, int prevAmount);
+	public abstract int getNodeRequirements();
+
 }

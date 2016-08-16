@@ -23,6 +23,7 @@ import eu.around_me.rpgplugin.libary.AdjacencyMatrix;
 import eu.around_me.rpgplugin.libary.GlassColor;
 import net.md_5.bungee.api.ChatColor;
 import playerstats.RPGPlayerStat;
+import skills.PassiveSkill;
 import skills.PassiveSkillPoint;
 import skills.Skill;
 
@@ -106,6 +107,12 @@ public class SkillTreeMenu implements Listener {
 			e.setCancelled(true);
 			if(s.learnSkill(learn)) {
 				e.getWhoClicked().sendMessage("You learned: " + learn.getChatColor() + learn.getName());
+				if(learn instanceof PassiveSkill) {
+					PassiveSkill ps = (PassiveSkill) learn;
+					if(ps.getSkillEffect() != null) {
+						ps.getSkillEffect().executeEffect(e.getWhoClicked());
+					}
+				}
 				SkillItems.remove(e.getWhoClicked());
 			} else {
 				if(s.getLearnedSkills().contains(learn)) {

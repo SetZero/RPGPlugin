@@ -39,6 +39,9 @@ public class RPGPluginMain extends JavaPlugin {
 			HumanEntity he = (HumanEntity)p;
 			p.sendMessage(ChatColor.DARK_RED + p.getName() + ChatColor.YELLOW + " is now registered!");
 			RPGPlayerStat stat = playerStats.get(he);
+
+			System.out.println("Finished!");
+			
 			if(stat == null) {
 				p.sendMessage(ChatColor.AQUA + "Welcome new Player!");
 				playerStats.put(p, new RPGPlayerStat(0, 0, 0, tree.getSkillTree()));

@@ -3,9 +3,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.entity.HumanEntity;
-import org.bukkit.event.EventPriority;
 import eu.around_me.rpgplugin.libary.AdjacencyMatrix;
 import net.md_5.bungee.api.ChatColor;
+import skills.PassiveSkill;
 import skills.PassiveSkillPoint;
 import skills.Skill;
 
@@ -19,8 +19,6 @@ public class RPGPlayerStat {
 	//TRYOUT: expToLevelUp -- Exp needed to levelup and get skillpoints
 	private int expToLevelUp = 0;
 	
-	//scale for the expToLevelUp var, which changes everytime levelUp() is executed
-	private int scale = 1;
 	
 	List<Skill> learned = new ArrayList<Skill>();
 	AdjacencyMatrix skillTree;
@@ -100,7 +98,13 @@ public class RPGPlayerStat {
 		if(skillpoints >= 1) {
 			if(!learned.contains(learn)) {
 				if(learn == null) return false;
-				Skill[] req = learn.getRequirements();
+				Skill[] req = learn.getSkillRequirements();
+				if(learn.getNodeRequirements() > 0) {
+					int[] position = skillTree.getPosition(learn);
+					if(position.length < 1) return false;
+					int connected = skillTree.inEdges(position[0]).size();
+					if(connected < learn.getNodeRequirements()) return false;
+				}
 				for(Skill reqskill : req) {
 					if(!learned.contains(reqskill))
 						return false;
@@ -127,7 +131,13 @@ public class RPGPlayerStat {
 				//Skill does not exist
 				if(learn == null) return false;
 				//Get the needed requirements for that skill
-				Skill[] req = learn.getRequirements();
+				Skill[] req = learn.getSkillRequirements();
+				
+				if(learn.getNodeRequirements() > 0) {
+					//Check if we have enough Nodes
+					int connected = skillTree.inEdges(position).size();
+					if(connected < learn.getNodeRequirements()) return false;
+				}
 				//Check if all the requirements are fulfilled
 				for(Skill reqskill : req) {
 					if(!learned.contains(reqskill))
@@ -140,8 +150,8 @@ public class RPGPlayerStat {
 				//TODO: Make this less static....
 				//Call learnSkill from skill class
 				if(learn instanceof PassiveSkillPoint) {
-					PassiveSkillPoint p = (PassiveSkillPoint) learn;
-					p.learnSkill(this);
+					PassiveSkillPoint psp = (PassiveSkillPoint) learn;
+					psp.learnSkill(this);
 				}
 				return true;
 			}
@@ -149,18 +159,30 @@ public class RPGPlayerStat {
 		return false;
 	}
 	
+	public void setupSkillEffects(HumanEntity p) {
+		for(Skill s: learned) {
+			if(s instanceof PassiveSkill) {
+				PassiveSkill ps = (PassiveSkill) s;
+				ps.getSkillEffect().executeEffect(p);
+			}
+		}
+	}
+	
 	public void printStats(HumanEntity p) {
+		String progress = (expToLevelUp == 0) ? "???" : String.valueOf(Math.round((((double)exp / expToLevelUp) * 100)));
 		p.sendMessage("-" + ChatColor.DARK_BLUE + p.getName() + ChatColor.WHITE + "-");
 		p.sendMessage("Level: " + level);
-		p.sendMessage("Exp: " + exp);
+		p.sendMessage("Exp: " + exp + " / " + expToLevelUp + " (" + progress + "%)");
 		p.sendMessage("Skillpoints: " + skillpoints);
 		p.sendMessage("----------------");
 		p.sendMessage(ChatColor.DARK_RED + "Strength: " + ChatColor.WHITE + str);
-		p.sendMessage(ChatColor.DARK_AQUA + "Inteligence: " + ChatColor.WHITE + wis);
+		p.sendMessage(ChatColor.DARK_AQUA + "Intelligence: " + ChatColor.WHITE + wis);
 		p.sendMessage(ChatColor.DARK_GREEN + "Dexterity: " + ChatColor.WHITE + dex);
 		p.sendMessage("----------------");
 		
 		
 		
-	}	
+	}
+
+
 }
