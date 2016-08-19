@@ -22,9 +22,9 @@ import org.bukkit.plugin.Plugin;
 import eu.around_me.rpgplugin.libary.AdjacencyMatrix;
 import eu.around_me.rpgplugin.libary.GlassColor;
 import eu.around_me.rpgplugin.playerstats.RPGPlayerStat;
-import eu.around_me.rpgpluginskills.PassiveSkill;
-import eu.around_me.rpgpluginskills.PassiveSkillPoint;
-import eu.around_me.rpgpluginskills.Skill;
+import eu.around_me.rpgplugin.skills.PassiveSkill;
+import eu.around_me.rpgplugin.skills.PassiveSkillPoint;
+import eu.around_me.rpgplugin.skills.Skill;
 import net.md_5.bungee.api.ChatColor;
 
 public class SkillTreeMenu implements Listener {

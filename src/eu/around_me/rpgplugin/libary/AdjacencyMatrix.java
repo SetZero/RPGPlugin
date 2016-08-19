@@ -3,7 +3,7 @@ package eu.around_me.rpgplugin.libary;
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.around_me.rpgpluginskills.Skill;
+import eu.around_me.rpgplugin.skills.Skill;
 
 /**
  * Creates an Adjacency matrix (https://en.wikipedia.org/wiki/Adjacency_matrix)

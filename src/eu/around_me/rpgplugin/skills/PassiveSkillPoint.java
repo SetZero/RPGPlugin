@@ -1,4 +1,4 @@
-package eu.around_me.rpgpluginskills;
+package eu.around_me.rpgplugin.skills;
 
 import java.util.ArrayList;
 import java.util.List;

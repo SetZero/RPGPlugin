@@ -1,4 +1,4 @@
-package eu.around_me.rpgpluginskills;
+package eu.around_me.rpgplugin.skills;
 
 import org.bukkit.entity.HumanEntity;
 

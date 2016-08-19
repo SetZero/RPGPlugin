@@ -6,9 +6,9 @@ import org.bukkit.entity.HumanEntity;
 import eu.around_me.rpgplugin.libary.AdjacencyMatrix;
 import eu.around_me.rpgplugin.libary.userfiles.FileHandler;
 import eu.around_me.rpgplugin.scoreboard.Sidebar;
-import eu.around_me.rpgpluginskills.PassiveSkill;
-import eu.around_me.rpgpluginskills.PassiveSkillPoint;
-import eu.around_me.rpgpluginskills.Skill;
+import eu.around_me.rpgplugin.skills.PassiveSkill;
+import eu.around_me.rpgplugin.skills.PassiveSkillPoint;
+import eu.around_me.rpgplugin.skills.Skill;
 import net.md_5.bungee.api.ChatColor;
 
 public class RPGPlayerStat {

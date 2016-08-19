@@ -1,4 +1,4 @@
-package eu.around_me.rpgpluginskills;
+package eu.around_me.rpgplugin.skills;
 
 
 public abstract class PassiveSkill extends Skill {

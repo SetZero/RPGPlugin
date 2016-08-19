@@ -13,7 +13,7 @@ import org.bukkit.plugin.Plugin;
 
 import eu.around_me.rpgplugin.libary.AdjacencyMatrix;
 import eu.around_me.rpgplugin.playerstats.RPGPlayerStat;
-import eu.around_me.rpgpluginskills.Skill;
+import eu.around_me.rpgplugin.skills.Skill;
 
 public class FileHandler {
 

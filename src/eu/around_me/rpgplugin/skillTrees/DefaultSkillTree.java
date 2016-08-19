@@ -2,8 +2,8 @@ package eu.around_me.rpgplugin.skillTrees;
 
 import eu.around_me.rpgplugin.libary.AdjacencyMatrix;
 import eu.around_me.rpgplugin.libary.SkillPoints;
-import eu.around_me.rpgpluginskills.PassiveSkillPoint;
-import eu.around_me.rpgpluginskills.Skill;
+import eu.around_me.rpgplugin.skills.PassiveSkillPoint;
+import eu.around_me.rpgplugin.skills.Skill;
 
 public class DefaultSkillTree
 {

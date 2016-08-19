@@ -4,7 +4,7 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
-import eu.around_me.rpgpluginskills.PassiveSkillEffects;
+import eu.around_me.rpgplugin.skills.PassiveSkillEffects;
 
 public class Strength extends PassiveSkillEffects implements Listener{
 

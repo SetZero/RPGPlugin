@@ -1,4 +1,4 @@
-package eu.around_me.rpgpluginskills;
+package eu.around_me.rpgplugin.skills;
 
 import net.md_5.bungee.api.ChatColor;
 
