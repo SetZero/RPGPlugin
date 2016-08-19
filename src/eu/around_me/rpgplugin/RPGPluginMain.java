@@ -4,16 +4,20 @@ import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import SkillTrees.DefaultSkillTree;
-import listeners.ExpChange;
-import listeners.MenuPlugin;
-import listeners.PlayerJoin;
-import playerstats.RPGPlayerStat;
+import eu.around_me.rpgplugin.libary.userfiles.FileHandler;
+import eu.around_me.rpgplugin.listeners.ExpChange;
+import eu.around_me.rpgplugin.listeners.MenuPlugin;
+import eu.around_me.rpgplugin.listeners.PlayerJoin;
+import eu.around_me.rpgplugin.listeners.PlayerQuit;
+import eu.around_me.rpgplugin.playerstats.RPGPlayerStat;
+import eu.around_me.rpgplugin.scoreboard.Sidebar;
+import eu.around_me.rpgplugin.skillTrees.DefaultSkillTree;
 
 public class RPGPluginMain extends JavaPlugin {
 	FileConfiguration config = getConfig();
@@ -25,11 +29,13 @@ public class RPGPluginMain extends JavaPlugin {
 		DefaultSkillTree tree = new DefaultSkillTree();
 		
 		ExpChange exp = new ExpChange(playerStats);
-		PlayerJoin join = new PlayerJoin(playerStats, tree.getSkillTree());
+		PlayerJoin join = new PlayerJoin(playerStats, tree.getSkillTree(), this);
+		PlayerQuit quit = new PlayerQuit(playerStats);
 		
 	    
 		getServer().getPluginManager().registerEvents(exp, this);
 		getServer().getPluginManager().registerEvents(join, this);
+		getServer().getPluginManager().registerEvents(quit, this);
 		
 
 		MenuPlugin mainmenu = new MenuPlugin(playerStats, this);
@@ -42,9 +48,29 @@ public class RPGPluginMain extends JavaPlugin {
 
 			System.out.println("Finished!");
 			
+			FileHandler fh = new FileHandler(playerStats.get(p), p, this);
+			
+			//Find Player (in Config Files)
+			RPGPlayerStat ps;
+			try {
+				ps = fh.load(tree.getSkillTree());
+			
+				if(ps != null) {
+					p.sendMessage(ChatColor.AQUA + "Welcome back, " + p.getName());
+					playerStats.put(p, ps);
+					
+					Sidebar sb = new Sidebar(playerStats.get(p), p);
+					playerStats.get(p).setSb(sb);
+					return;
+				}
+			} catch (InvalidConfigurationException e) {
+				e.printStackTrace();
+			}
+			
+			//Not found?
 			if(stat == null) {
 				p.sendMessage(ChatColor.AQUA + "Welcome new Player!");
-				playerStats.put(p, new RPGPlayerStat(0, 0, 0, tree.getSkillTree()));
+				playerStats.put(p, new RPGPlayerStat(0, 0, 0, tree.getSkillTree(), fh));
 			}
 		}
     }
