@@ -1,4 +1,4 @@
-package eu.around_me.rpgplugin.skilleffects.points;
+package eu.around_me.rpgplugin.skilleffects.passive.points;
 
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -6,16 +6,17 @@ import org.bukkit.event.Listener;
 
 import eu.around_me.rpgplugin.skills.PassiveSkillEffects;
 
-public class Strength extends PassiveSkillEffects implements Listener{
+public class Dexterity extends PassiveSkillEffects implements Listener{
 
-	double strengthModifier = 1;
+	float walkingModifier = 0.005f;
 	
 	@Override
 	public void executeEffect(HumanEntity p) {
 		// TODO Auto-generated method stub
 		if(p instanceof Player) {
 			Player pl = (Player) p;
-			pl.setMaxHealth(pl.getMaxHealth() + strengthModifier);
+			if((pl.getWalkSpeed() + walkingModifier) <= 1)
+				pl.setWalkSpeed(pl.getWalkSpeed() + walkingModifier);
 		}
 	}
 

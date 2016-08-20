@@ -8,7 +8,9 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import eu.around_me.rpgplugin.commands.Skillbind;
 import eu.around_me.rpgplugin.libary.JoinHandler;
+import eu.around_me.rpgplugin.libary.SkillbindHandler;
 import eu.around_me.rpgplugin.listeners.ExpChange;
 import eu.around_me.rpgplugin.listeners.MenuPlugin;
 import eu.around_me.rpgplugin.listeners.PlayerJoin;
@@ -23,7 +25,7 @@ public class RPGPluginMain extends JavaPlugin {
 	
 	@Override
     public void onEnable() {
-		DefaultSkillTree tree = new DefaultSkillTree();
+		DefaultSkillTree tree = new DefaultSkillTree(this);
 		
 		ExpChange exp = new ExpChange(playerStats);
 		PlayerJoin join = new PlayerJoin(playerStats, tree.getSkillTree(), this);
@@ -33,6 +35,10 @@ public class RPGPluginMain extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(exp, this);
 		getServer().getPluginManager().registerEvents(join, this);
 		getServer().getPluginManager().registerEvents(quit, this);
+		
+
+		this.getCommand("skillbind").setExecutor(new Skillbind(playerStats));
+		getServer().getPluginManager().registerEvents(new SkillbindHandler(playerStats), this);
 		
 
 		MenuPlugin mainmenu = new MenuPlugin(playerStats, this);

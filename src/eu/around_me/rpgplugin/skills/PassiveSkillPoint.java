@@ -7,8 +7,8 @@ import org.bukkit.DyeColor;
 
 import eu.around_me.rpgplugin.libary.SkillPoints;
 import eu.around_me.rpgplugin.playerstats.RPGPlayerStat;
-import eu.around_me.rpgplugin.skilleffects.points.Dexterity;
-import eu.around_me.rpgplugin.skilleffects.points.Strength;
+import eu.around_me.rpgplugin.skilleffects.passive.points.Dexterity;
+import eu.around_me.rpgplugin.skilleffects.passive.points.Strength;
 import net.md_5.bungee.api.ChatColor;
 
 public class PassiveSkillPoint extends PassiveSkill {
@@ -71,9 +71,8 @@ public class PassiveSkillPoint extends PassiveSkill {
 	}
 
 	@Override
-	public String setDescription(String desc) {
+	public void setDescription(String desc) {
 		this.description = desc;
-		return null;
 	}
 	
 	@Override

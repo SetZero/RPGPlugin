@@ -17,9 +17,7 @@ public class Sidebar {
 	public Sidebar(RPGPlayerStat stat, HumanEntity player) {
 		this.stat = stat;
 		this.player = player;
-		if(stat == null) {
-			System.out.println("WTF!");
-		} else {
+		if(stat != null) {
 			sidebarRefresh();
 		}
 	}

@@ -2,6 +2,7 @@ package eu.around_me.rpgplugin.libary.userfiles;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -74,9 +75,11 @@ public class FileHandler {
             playerData.set("level.exp", stats.getEXP());
             playerData.set("level.skillpoints", stats.getSkillpoints());
             
+            List<Integer> skills = new ArrayList<Integer>();
             for(Skill s: stats.getLearnedSkills()) {
-            	playerData.set("learned." + s.getID(), s.getID());
+            	skills.add(s.getID());
             }
+            playerData.set("learned.skills", skills);
            
             playerData.save(f);
         } catch (IOException exception) {
@@ -99,7 +102,7 @@ public class FileHandler {
 				int exp = playerData.getInt("level.exp");
 				int skillpoints = playerData.getInt("level.skillpoints");
 				
-				List<Integer> l = playerData.getIntegerList("learned");
+				List<Integer> l = playerData.getIntegerList("learned.skills");
 				
 				
 				RPGPlayerStat stat = new RPGPlayerStat(str, dex, wis, skillTree, this);

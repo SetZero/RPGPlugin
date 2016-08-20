@@ -16,7 +16,7 @@ public abstract class Skill {
 	public abstract String getName();
 	public abstract String setName(String name);
 	public abstract String getDescription();
-	public abstract String setDescription(String desc);
+	public abstract void setDescription(String desc);
 	public abstract ChatColor getChatColor();
 	public abstract void setChatColor(ChatColor color);
 	public abstract void setSkillRequirements(Skill[] req);

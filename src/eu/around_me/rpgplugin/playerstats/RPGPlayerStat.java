@@ -1,7 +1,10 @@
 package eu.around_me.rpgplugin.playerstats;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import eu.around_me.rpgplugin.libary.AdjacencyMatrix;
 import eu.around_me.rpgplugin.libary.userfiles.FileHandler;
@@ -22,6 +25,7 @@ public class RPGPlayerStat {
 	private int expToLevelUp = 0;
 	private FileHandler fh;
 	private Sidebar sb;
+	private Map<Material, Skill> bindSkills;
 	
 	
 	List<Skill> learned = new ArrayList<Skill>();
@@ -33,6 +37,7 @@ public class RPGPlayerStat {
 		this.wis = wis;
 		this.skillTree = skillTree;
 		this.fh = fh;
+		bindSkills = new HashMap<Material, Skill>();
 	}
 	
 	public int getStr() {
@@ -121,6 +126,14 @@ public class RPGPlayerStat {
 	
 	public void setSkillpoints(int skillpoints) {
 		this.skillpoints = skillpoints;
+	}
+	
+	public void addSkillbind(Material m, Skill s) {
+		bindSkills.put(m, s);
+	}
+	
+	public Skill getSkillbind(Material m) {
+		return bindSkills.get(m);
 	}
 	
 	public boolean learnSkill(Skill learn) {
@@ -224,7 +237,6 @@ public class RPGPlayerStat {
 	public void printStats(HumanEntity p) {
 		p.sendMessage("-" + ChatColor.DARK_BLUE + p.getName() + ChatColor.WHITE + "-");
 		p.sendMessage("Level: " + level);
-		//p.sendMessage("Exp: " + exp + " / " + expToLevelUp + " (" + progress + "%)");
 		p.sendMessage("EXP: " + printFullLevelProgress());
 		p.sendMessage("Skillpoints: " + skillpoints);
 		p.sendMessage("----------------");

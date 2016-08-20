@@ -1,7 +1,10 @@
 package eu.around_me.rpgplugin.skillTrees;
 
+import org.bukkit.plugin.Plugin;
+
 import eu.around_me.rpgplugin.libary.AdjacencyMatrix;
 import eu.around_me.rpgplugin.libary.SkillPoints;
+import eu.around_me.rpgplugin.skilleffects.active.points.Shield;
 import eu.around_me.rpgplugin.skills.PassiveSkillPoint;
 import eu.around_me.rpgplugin.skills.Skill;
 
@@ -9,7 +12,7 @@ public class DefaultSkillTree
 {
 	private AdjacencyMatrix skillTree;
 	
-	public DefaultSkillTree()
+	public DefaultSkillTree(Plugin p)
 	{
 		Skill[] skills = {
 			new PassiveSkillPoint(SkillPoints.INT, null),
@@ -21,10 +24,12 @@ public class DefaultSkillTree
 			new PassiveSkillPoint(SkillPoints.STR, null),
 			new PassiveSkillPoint(SkillPoints.DEX, null),
 			new PassiveSkillPoint(SkillPoints.DEX, null),
+			new Shield(p)
 		};
 		skillTree = new AdjacencyMatrix(skills.length);
 
 		skillTree.addDblEdge(skills[0], skills[2].getID());
+		skillTree.addDblEdge(skills[9], skills[0].getID());
 		skillTree.addDblEdge(skills[1], skills[0].getID());
 		skillTree.addDblEdge(skills[2], skills[0].getID());
 		skillTree.addDblEdge(skills[3], skills[0].getID());

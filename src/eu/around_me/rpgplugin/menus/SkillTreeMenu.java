@@ -8,6 +8,7 @@ import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
@@ -22,6 +23,7 @@ import org.bukkit.plugin.Plugin;
 import eu.around_me.rpgplugin.libary.AdjacencyMatrix;
 import eu.around_me.rpgplugin.libary.GlassColor;
 import eu.around_me.rpgplugin.playerstats.RPGPlayerStat;
+import eu.around_me.rpgplugin.skills.ActiveSkill;
 import eu.around_me.rpgplugin.skills.PassiveSkill;
 import eu.around_me.rpgplugin.skills.PassiveSkillPoint;
 import eu.around_me.rpgplugin.skills.Skill;
@@ -51,6 +53,14 @@ public class SkillTreeMenu implements Listener {
 				} else {
 					last = createAttribute(ps.getItemColor(), 1, ps.getChatColor() + ps.getName(), ps.getDescription(), ps.getChatColor() + ps.getName().substring(0, 3).toUpperCase() + ChatColor.WHITE + " +1");
 				}
+			} else if(s instanceof ActiveSkill) {
+				ActiveSkill as = (ActiveSkill) s;
+				System.out.println(as.getName());
+				if(stats.getLearnedSkills().contains(s)) {
+					last = createActive(as.getItem(), 1, as.getChatColor() + as.getName(), as.getDescription(), ChatColor.DARK_RED + "Learned " + as.getChatColor() + as.getName());
+				} else {
+					last = createActive(as.getItem(), 1, as.getChatColor() + as.getName(), as.getDescription(), "Learn " + as.getChatColor() + as.getName());
+				}
 			}
 			SkillItems.put(last, s);
 			inv.setItem(pos, last);
@@ -79,13 +89,21 @@ public class SkillTreeMenu implements Listener {
 		return i;
 	}
 	
-	/*private ItemStack createActive(Material dc, int skillcount, String name, String desc, String desc2) {
-		ItemStack i = new ItemStack(dc);
-		ItemMeta im = i.getItemMeta();
+	private ItemStack createActive(ItemStack is, int skillcount, String name, String desc, String desc2) {
+		ItemMeta im = is.getItemMeta();
         im.setDisplayName(name);
 		im.setLore(Arrays.asList(desc, desc2));
-		i.setItemMeta(im);
-		return i;
+		is.setItemMeta(im);
+		return is;
+	}
+	
+	/*private ItemStack createLearnedActive(ItemStack is, int skillcount, String name, String desc, String desc2) {
+		ItemMeta im = is.getItemMeta();
+        im.setDisplayName(name);
+		im.setLore(Arrays.asList(desc, desc2));
+		//im.addEnchant(Enchantment.DURABILITY, 1, true);
+		is.setItemMeta(im);
+		return is;
 	}*/
 	
 	public void show(HumanEntity p) {

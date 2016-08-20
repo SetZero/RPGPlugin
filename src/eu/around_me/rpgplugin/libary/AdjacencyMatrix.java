@@ -100,8 +100,10 @@ public class AdjacencyMatrix {
 	public Skill getSkillByID(int id) {
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j <= i; j++) {
-				if (id == a[i][j].getID())
-					return a[i][j];
+				if(a[i][j] != null) {
+					if (id == a[i][j].getID())
+						return a[i][j];
+				}
 			}
 		}
 		return null;

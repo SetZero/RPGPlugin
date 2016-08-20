@@ -2,3 +2,6 @@ name: RPGPluginMain
 main: eu.around_me.rpgplugin.RPGPluginMain
 version: 0.1
 commands:
+  skillbind:
+    description: Bind a skill to a item
+    usage: /skillbind [skillname]
