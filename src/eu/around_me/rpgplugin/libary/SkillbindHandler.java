@@ -39,10 +39,13 @@ public class SkillbindHandler implements Listener{
 				ActiveSkill as = (ActiveSkill) s;
 				if(stat.getCooldown(s) <= 0) {
 					if(as.getManacost() <= stat.getMana()) {
-						as.executeActive(stat, (HumanEntity)p);
-						p.sendMessage("Called Skill: " + as.getChatColor() + as.getName());
-						stat.setCooldowns(as, as.getCooldown());
-						stat.setMana(stat.getMana() - as.getManacost());
+						if(as.executeActive(stat, (HumanEntity)p)) {
+							p.sendMessage("Called Skill: " + as.getChatColor() + as.getName());
+							stat.setCooldowns(as, as.getCooldown());
+							stat.setMana(stat.getMana() - as.getManacost());
+						} else {
+							p.sendMessage(ChatColor.DARK_RED + "There was an error while executing this skill!");
+						}
 					} else {
 						p.sendMessage("Not enough " + ChatColor.BLUE + "Mana");
 					}

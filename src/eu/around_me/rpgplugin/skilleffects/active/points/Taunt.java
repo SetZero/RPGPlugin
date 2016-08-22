@@ -1,38 +1,45 @@
 package eu.around_me.rpgplugin.skilleffects.active.points;
 
+import java.util.List;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Monster;
+import org.bukkit.entity.Wolf;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
-import eu.around_me.rpgplugin.libary.WorldEditing;
 import eu.around_me.rpgplugin.playerstats.RPGPlayerStat;
 import eu.around_me.rpgplugin.skills.ActiveSkill;
 import eu.around_me.rpgplugin.skills.Skill;
 import net.md_5.bungee.api.ChatColor;
 
-public class Shield extends ActiveSkill {
+public class Taunt extends ActiveSkill {
 
-	String skillName = "Shield";
-	String skillDesc = "Generate a Shield around you";
-	ChatColor skillColor = ChatColor.GRAY;
-	ItemStack skillItem = new ItemStack(Material.SHIELD);
+	String skillName = "Taunt";
+	String skillDesc = "Taunts nearby enemies";
+	ChatColor skillColor = ChatColor.DARK_RED;
+	ItemStack skillItem = new ItemStack(Material.GOLD_SWORD);
 	Skill[] req = {};
 	boolean prevReq = false;
 	int prevAmount = 0;
-	private int cooldown = 4;
-	private int manacost = 20;
+	private int cooldown = 10;
+	private int manacost = 5;
+	
+	//Custom
+	private int distance = 40;
 	Plugin plugin;
 	
-	public Shield(Plugin plugin) {
+	public Taunt(Plugin plugin) {
 		this.plugin = plugin;
 	}
 
 	@Override
 	public boolean executeActive(RPGPlayerStat stat, HumanEntity p) {
-		placeShield(p.getWorld(), Material.GLASS, p.getLocation(), stat, (int)(stat.getWis()/4)+2);
+		tauntEnemies(p);
 		return true;
 	}
 
@@ -95,43 +102,16 @@ public class Shield extends ActiveSkill {
 		}
 	}
 	
-	protected void placeShield(World w, Material m, Location l, RPGPlayerStat stat, int r) {
-		int x = (int) (l.getX() - r);
-		int y = (int) (l.getY() - r);
-		int z = (int) (l.getZ() - r);
-		for ( int i=0 ; i<r*2 ; i++ )
-		{
-			for ( int j=0 ; j<r*2 ; j++ )
-			{
-				
-				for ( int k=0 ; k<r*2 ; k++ )
-				{
-					double distance = (r-i)*(r-i)
-							  + (r-j)*(r-j)
-							  + (r-k)*(r-k);
-					
-					if ( distance < (r*r) ) {
-						if(i > 0 && j > 0 && k > 0) {
-							int r2 = r-1;
-							double distance2 = (r2-(i-1))*(r2-(i-1))
-									  + (r2-(j-1))*(r2-(j-1))
-									  + (r2-(k-1))*(r2-(k-1));
-							if (!(distance2 < (r2*r2))) {
-								WorldEditing.placeTempBlock(w, x, y, z, m, 5+stat.getWis()*4, plugin);
-							}
-						} else {
-							WorldEditing.placeTempBlock(w, x, y, z, m, 5+stat.getWis()*4, plugin);
-						}
-					}
-					x++;
-				}
-				y++;
-				x = (int) (l.getX() - r);
-				
+	protected void tauntEnemies(HumanEntity p) {
+		List<Entity> mobs = p.getNearbyEntities(distance, distance, distance);
+		for (Entity e : mobs) {
+			if ((e instanceof Monster)) {
+				((Monster) e).setTarget(p);
+			} else if (e instanceof Wolf) {
+				Wolf w = (Wolf) e;
+				w.setAngry(true);
+				w.setTarget(p);
 			}
-			z++;
-			x = (int) (l.getX() - r);
-			y = (int) (l.getY() - r);
 		}
 	}
 
