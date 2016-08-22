@@ -7,10 +7,10 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import eu.around_me.rpgplugin.commands.Skillbind;
 import eu.around_me.rpgplugin.libary.JoinHandler;
 import eu.around_me.rpgplugin.libary.SkillbindHandler;
+import eu.around_me.rpgplugin.libary.handlers.Timer;
 import eu.around_me.rpgplugin.listeners.ExpChange;
 import eu.around_me.rpgplugin.listeners.MenuPlugin;
 import eu.around_me.rpgplugin.listeners.PlayerJoin;
@@ -43,6 +43,8 @@ public class RPGPluginMain extends JavaPlugin {
 
 		MenuPlugin mainmenu = new MenuPlugin(playerStats, this);
 		getServer().getPluginManager().registerEvents(mainmenu, this);
+		
+		new Timer(playerStats).runTaskTimer(this, 10, 20);
 		
 		for(Player p : Bukkit.getOnlinePlayers()){
 			JoinHandler.registerPlayer(p, playerStats, tree.getSkillTree(), this);

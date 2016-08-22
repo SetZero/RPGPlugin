@@ -22,6 +22,8 @@ public class Shield extends ActiveSkill {
 	Skill[] req = {};
 	boolean prevReq = false;
 	int prevAmount = 0;
+	private int cooldown = 4;
+	private int manacost = 20;
 	Plugin plugin;
 	
 	public Shield(Plugin plugin) {
@@ -30,7 +32,7 @@ public class Shield extends ActiveSkill {
 
 	@Override
 	public boolean executeActive(RPGPlayerStat stat, HumanEntity p) {
-		placeShield(p.getWorld(), Material.GLASS, p.getLocation(), stat, stat.getWis()+3);
+		placeShield(p.getWorld(), Material.GLASS, p.getLocation(), stat, (int)(stat.getWis()/4)+2);
 		return false;
 	}
 
@@ -136,6 +138,16 @@ public class Shield extends ActiveSkill {
 	@Override
 	public ItemStack getItem() {
 		return this.skillItem;
+	}
+
+	@Override
+	public int getCooldown() {
+		return this.cooldown;
+	}
+
+	@Override
+	public int getManacost() {
+		return manacost;
 	}
 
 }

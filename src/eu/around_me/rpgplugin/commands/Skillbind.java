@@ -29,13 +29,19 @@ public class Skillbind implements CommandExecutor{
 			List<Skill> skillList = stat.getLearnedSkills();
 			for(Skill skill : skillList) {
 				if(skill.getName().equalsIgnoreCase(args[0]) && skill instanceof ActiveSkill) {
-					Material m = p.getEquipment().getItemInMainHand().getType();
-					stat.addSkillbind(m, skill);
-					p.sendMessage("Skill successfully bound to: " + m.name());
-					return true;
+					if(stat.getLearnedSkills().contains(skill)) {
+						Material m = p.getEquipment().getItemInMainHand().getType();
+						stat.addSkillbind(m, skill);
+						p.sendMessage("Skill successfully bound to: " + m.name());
+						return true;
+					} else {
+						p.sendMessage("You haven't learned this Skill yet!");
+						return true;
+					}
 				}
 			}
 			p.sendMessage("Unknown Skill with name: " + args[0]);
+			return true;
 		}
 		return false;
 	}

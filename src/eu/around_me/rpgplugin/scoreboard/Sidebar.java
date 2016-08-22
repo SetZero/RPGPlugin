@@ -31,6 +31,7 @@ public class Sidebar {
 		
 		objective.getScore("Level: " + stat.getLevel()).setScore(8);
 		objective.getScore(stat.printFullLevelProgress()).setScore(7);
+		objective.getScore(stat.printFullMana()).setScore(7);
 		objective.getScore(ChatColor.WHITE + "    ").setScore(6);
 		objective.getScore(ChatColor.DARK_GREEN + "Dexterity: " + ChatColor.WHITE + stat.getDex()).setScore(5);
 		objective.getScore(ChatColor.DARK_RED + "Strength: " + ChatColor.WHITE + stat.getStr()).setScore(4);

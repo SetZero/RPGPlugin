@@ -21,11 +21,15 @@ public class RPGPlayerStat {
 	private int level = 0;
 	private int skillpoints = 0;
 	private int exp = 0;
+	private int mana = 50;
+	private int maxmana = 100;
+	private int manaregen = 2;
 	//TRYOUT: expToLevelUp -- Exp needed to levelup and get skillpoints
 	private int expToLevelUp = 0;
 	private FileHandler fh;
 	private Sidebar sb;
 	private Map<Material, Skill> bindSkills;
+	private Map<Skill, Integer> cooldowns;
 	
 	
 	List<Skill> learned = new ArrayList<Skill>();
@@ -38,6 +42,7 @@ public class RPGPlayerStat {
 		this.skillTree = skillTree;
 		this.fh = fh;
 		bindSkills = new HashMap<Material, Skill>();
+		cooldowns = new HashMap<Skill, Integer>();
 	}
 	
 	public int getStr() {
@@ -75,6 +80,7 @@ public class RPGPlayerStat {
 	public void levelUp() {
 		skillpoints++; //TODO: not a static value
 		level++;
+		sb.sidebarRefresh();
 		//insert algorithm for expToLevelUp variable here
 	}
 	
@@ -96,6 +102,30 @@ public class RPGPlayerStat {
 		return exp;
 	}
 	
+	public int getMana() {
+		return mana;
+	}
+
+	public void setMana(int mana) {
+		this.mana = mana;
+	}
+
+	public int getMaxmana() {
+		return maxmana;
+	}
+
+	public void setMaxmana(int maxmana) {
+		this.maxmana = maxmana;
+	}
+
+	public int getManaregen() {
+		return manaregen;
+	}
+
+	public void setManaregen(int manaregen) {
+		this.manaregen = manaregen;
+	}
+
 	public List<Skill> getLearnedSkills() {
 		return learned;
 	}
@@ -128,6 +158,21 @@ public class RPGPlayerStat {
 		this.skillpoints = skillpoints;
 	}
 	
+	public int getCooldown(Skill s) {
+		if(cooldowns.get(s) == null)
+			return 0;
+		else
+			return cooldowns.get(s);
+	}
+	
+	public Map<Skill, Integer> getCooldowns() {
+		return cooldowns;
+	}
+
+	public void setCooldowns(Skill s, int cooldown) {
+		cooldowns.put(s, cooldown);
+	}
+
 	public void addSkillbind(Material m, Skill s) {
 		bindSkills.put(m, s);
 	}
@@ -214,23 +259,39 @@ public class RPGPlayerStat {
 		learned.add(skillTree.getSkillByID(id));
 	}
 	
-	public String printLevelProgressBar(int bars) {
-		String fancy = ChatColor.DARK_GREEN+"";
+	public String printProgressBar(int bars, int progressbars, ChatColor color) {
+		String fancy = color+"";
 		boolean changed = false;
-		int progressbars = (int) ((expToLevelUp == 0) ? 0 : Math.round((((double)exp / expToLevelUp) * 20)));
+		
 		for(int i=0;i<bars;i++) {
 			if(i>=progressbars && !changed) {
 				changed = true;
-				fancy += ChatColor.DARK_RED;
+				fancy += ChatColor.DARK_GRAY;
 			}
 			fancy += "▏";
 		}
 		return fancy;
 	}
 	
+	public String printLevelProgressBar(int bars) {
+		int progressbars = (int) ((expToLevelUp == 0) ? 0 : Math.round((((double)exp / expToLevelUp) * bars)));
+		return printProgressBar(bars, progressbars, ChatColor.DARK_GREEN);
+	}
+	
+	public String printManaBar(int bars) {
+		int progressbars = (int) ((maxmana == 0) ? 0 : Math.round((((double)mana / maxmana) * bars)));
+		return printProgressBar(bars, progressbars, ChatColor.BLUE);
+	}
+	
 	public String printFullLevelProgress() {
-		String fancy = printLevelProgressBar(30);
+		String fancy = printLevelProgressBar(28);
 		String progress = (expToLevelUp == 0) ? "0" : String.valueOf(Math.round((((double)exp / expToLevelUp) * 100)));
+		return fancy + " (" + progress + "%)";
+	}
+	
+	public String printFullMana() {
+		String fancy = printManaBar(28);
+		String progress = (maxmana == 0) ? "0" : String.valueOf(Math.round((((double)mana / maxmana) * 100)));
 		return fancy + " (" + progress + "%)";
 	}
 	

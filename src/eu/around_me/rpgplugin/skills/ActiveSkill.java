@@ -9,5 +9,7 @@ public abstract class ActiveSkill extends Skill {
 
 	public abstract boolean executeActive( RPGPlayerStat stat, HumanEntity p);
 	public abstract ItemStack getItem();
+	public abstract int getCooldown();
+	public abstract int getManacost();
 
 }
