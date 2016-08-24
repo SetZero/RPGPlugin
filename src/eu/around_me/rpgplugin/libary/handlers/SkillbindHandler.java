@@ -1,4 +1,4 @@
-package eu.around_me.rpgplugin.libary;
+package eu.around_me.rpgplugin.libary.handlers;
 
 import java.util.Map;
 
@@ -47,7 +47,7 @@ public class SkillbindHandler implements Listener{
 							p.sendMessage(ChatColor.DARK_RED + "There was an error while executing this skill!");
 						}
 					} else {
-						p.sendMessage("Not enough " + ChatColor.BLUE + "Mana");
+						p.sendMessage("Not enough " + stat.getManabarcolor() + stat.getManaName());
 					}
 				} else {
 					p.sendMessage(as.getChatColor() + as.getName() + ChatColor.WHITE + " is not ready yet! (" + stat.getCooldown(as) + "s)");

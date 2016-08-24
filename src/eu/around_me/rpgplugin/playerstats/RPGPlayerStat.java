@@ -6,7 +6,11 @@ import java.util.Map;
 
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.plugin.Plugin;
+
 import eu.around_me.rpgplugin.libary.AdjacencyMatrix;
+import eu.around_me.rpgplugin.libary.Manatypes;
+import eu.around_me.rpgplugin.libary.ShieldRegenTypes;
 import eu.around_me.rpgplugin.libary.userfiles.FileHandler;
 import eu.around_me.rpgplugin.scoreboard.Sidebar;
 import eu.around_me.rpgplugin.skills.PassiveSkill;
@@ -21,9 +25,20 @@ public class RPGPlayerStat {
 	private int level = 0;
 	private int skillpoints = 0;
 	private int exp = 0;
+	//Mana
 	private int mana = 50;
 	private int maxmana = 100;
 	private int manaregen = 2;
+	private int manaloss = 2;
+	private int outofcombattimer = 0;
+	private Manatypes manatype = Manatypes.MANA;
+	private ChatColor manabarcolor = ChatColor.BLUE;
+	//Shield
+	private boolean hasShield = true;
+	private int maxShield = 40;
+	private int Shield = 10;
+	private ShieldRegenTypes shieldRegenType = ShieldRegenTypes.OFFBATTLE;
+	private int shieldRegen = 2;
 	//TRYOUT: expToLevelUp -- Exp needed to levelup and get skillpoints
 	private int expToLevelUp = 0;
 	private FileHandler fh;
@@ -124,6 +139,92 @@ public class RPGPlayerStat {
 
 	public void setManaregen(int manaregen) {
 		this.manaregen = manaregen;
+	}
+	
+	public String getManaName() {
+		switch(manatype) {
+			case MANA:
+				return "Mana";
+			case ENERGY:
+				return "Energy";
+			case AGGRO:
+				return "Aggression";
+			default:
+				return "Unknown";
+		}
+	}
+	
+	public Manatypes getManatype() {
+		return manatype;
+	}
+
+	public int getManaloss() {
+		return manaloss;
+	}
+
+	public void setManaloss(int manaloss) {
+		this.manaloss = manaloss;
+	}
+
+	public int getOutofcombattimer() {
+		return outofcombattimer;
+	}
+
+	public void setOutofcombattimer(int outofcombattimer) {
+		this.outofcombattimer = outofcombattimer;
+	}
+	
+	public ChatColor getManabarcolor() {
+		switch(manatype) {
+		case MANA:
+			return ChatColor.BLUE;
+		case ENERGY:
+			return ChatColor.YELLOW;
+		case AGGRO:
+			return ChatColor.DARK_RED;
+		default:
+			return manabarcolor;
+	}
+	}
+
+	public boolean getHasShield() {
+		return hasShield;
+	}
+
+	public void setHasShield(boolean hasShield) {
+		this.hasShield = hasShield;
+	}
+
+	public int getMaxShield() {
+		return maxShield;
+	}
+
+	public void setMaxShield(int maxShield) {
+		this.maxShield = maxShield;
+	}
+
+	public int getShield() {
+		return Shield;
+	}
+
+	public void setShield(int shield) {
+		Shield = shield;
+	}
+
+	public ShieldRegenTypes getShieldRegenType() {
+		return shieldRegenType;
+	}
+
+	public void setShieldRegenType(ShieldRegenTypes shieldRegenType) {
+		this.shieldRegenType = shieldRegenType;
+	}
+
+	public int getShieldRegen() {
+		return shieldRegen;
+	}
+
+	public void setShieldRegen(int shieldRegen) {
+		this.shieldRegen = shieldRegen;
 	}
 
 	public List<Skill> getLearnedSkills() {
@@ -246,11 +347,11 @@ public class RPGPlayerStat {
 		return false;
 	}
 	
-	public void setupSkillEffects(HumanEntity p) {
+	public void setupSkillEffects(HumanEntity p, Plugin plugin) {
 		for(Skill s: learned) {
 			if(s instanceof PassiveSkill) {
 				PassiveSkill ps = (PassiveSkill) s;
-				ps.getSkillEffect().executeEffect(p);
+				ps.getSkillEffect().executeEffect(p, plugin);
 			}
 		}
 	}
@@ -278,9 +379,14 @@ public class RPGPlayerStat {
 		return printProgressBar(bars, progressbars, ChatColor.DARK_GREEN);
 	}
 	
-	public String printManaBar(int bars) {
+	public String printManaBar(int bars, ChatColor color) {
 		int progressbars = (int) ((maxmana == 0) ? 0 : Math.round((((double)mana / maxmana) * bars)));
-		return printProgressBar(bars, progressbars, ChatColor.BLUE);
+		return printProgressBar(bars, progressbars, color);
+	}
+	
+	public String printShieldBar(int bars, ChatColor color) {
+		int progressbars = (int) ((maxShield == 0) ? 0 : Math.round((((double)Shield / maxShield) * bars)));
+		return printProgressBar(bars, progressbars, color);
 	}
 	
 	public String printFullLevelProgress() {
@@ -289,9 +395,16 @@ public class RPGPlayerStat {
 		return fancy + " (" + progress + "%)";
 	}
 	
-	public String printFullMana() {
-		String fancy = printManaBar(28);
+	public String printFullMana(ChatColor color) {
+		String fancy = printManaBar(28, color);
 		String progress = (maxmana == 0) ? "0" : String.valueOf(Math.round((((double)mana / maxmana) * 100)));
+		return fancy + " (" + progress + "%)";
+	}
+	
+
+	public String printFullShield(ChatColor color) {
+		String fancy = printShieldBar(28, color);
+		String progress = (maxShield == 0) ? "0" : String.valueOf(Math.round((((double)Shield / maxShield) * 100)));
 		return fancy + " (" + progress + "%)";
 	}
 	

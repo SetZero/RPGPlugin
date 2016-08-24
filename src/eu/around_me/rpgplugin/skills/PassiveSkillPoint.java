@@ -29,6 +29,24 @@ public class PassiveSkillPoint extends PassiveSkill {
 		else
 			this.requirements = new Skill[requirements.length];
 	}
+	
+	public PassiveSkillPoint(PassiveSkillEffects effect, SkillPoints type, Skill[] requirements) {
+		skillEffects = new ArrayList<PassiveSkillEffects>();
+		this.type = type;
+		skillEffects.add(0, effect);
+		if(requirements == null) 
+			this.requirements = new Skill[0];
+		else
+			this.requirements = new Skill[requirements.length];
+	}
+
+	public PassiveSkillPoint(String name, String desc, ChatColor color,
+			PassiveSkillEffects effect, SkillPoints type, Skill[] requirements) {
+		this(effect, type, requirements);
+		this.name = name;
+		this.description = desc;
+		//this.color = color;
+	}
 
 	@Override
 	public String getName() {

@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 
 import eu.around_me.rpgplugin.libary.AdjacencyMatrix;
-import eu.around_me.rpgplugin.libary.JoinHandler;
+import eu.around_me.rpgplugin.libary.handlers.JoinHandler;
 import eu.around_me.rpgplugin.playerstats.RPGPlayerStat;
 
 /**

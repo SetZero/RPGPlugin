@@ -1,6 +1,7 @@
-package eu.around_me.rpgplugin.libary;
+package eu.around_me.rpgplugin.libary.handlers;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -10,9 +11,13 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import eu.around_me.rpgplugin.libary.AdjacencyMatrix;
 import eu.around_me.rpgplugin.libary.userfiles.FileHandler;
 import eu.around_me.rpgplugin.playerstats.RPGPlayerStat;
 import eu.around_me.rpgplugin.scoreboard.Sidebar;
+import eu.around_me.rpgplugin.skills.PassiveSkill;
+import eu.around_me.rpgplugin.skills.PassiveSkillEffects;
+import eu.around_me.rpgplugin.skills.Skill;
 
 public class JoinHandler {
 
@@ -37,6 +42,17 @@ public class JoinHandler {
 				p.sendMessage(ChatColor.AQUA + "Welcome back, " + h.getName());
 				Sidebar sb = new Sidebar(playerStats.get(p), p);
 				playerStats.get(p).setSb(sb);
+				
+				List<Skill> learned = playerStats.get(p).getLearnedSkills();
+				for(Skill s : learned) {
+					if(s instanceof PassiveSkill) {
+						PassiveSkill ps = (PassiveSkill) s;
+						PassiveSkillEffects pse = ps.getSkillEffect();
+						if(pse != null)
+							pse.executeEffect(p, plugin);
+					}
+				}
+				
 				return;
 			}
 		}
@@ -52,6 +68,17 @@ public class JoinHandler {
 				
 				Sidebar sb = new Sidebar(playerStats.get(p), p);
 				playerStats.get(p).setSb(sb);
+				
+				List<Skill> learned = playerStats.get(p).getLearnedSkills();
+				for(Skill s : learned) {
+					if(s instanceof PassiveSkill) {
+						PassiveSkill ps2 = (PassiveSkill) s;
+						PassiveSkillEffects pse2 = ps2.getSkillEffect();
+						if(pse2 != null)
+							pse2.executeEffect(p, plugin);
+					}
+				}
+				
 				return;
 			}
 		} catch (InvalidConfigurationException e) {
@@ -63,7 +90,7 @@ public class JoinHandler {
 			Sidebar sb = new Sidebar(playerStats.get(p), p);
 			playerStats.get(p).setSb(sb);
 		} else {
-			stat.setupSkillEffects(p);
+			stat.setupSkillEffects(p, plugin);
 		}
 	}
 

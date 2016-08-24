@@ -34,9 +34,11 @@ public class SkillTreeMenu implements Listener {
 	private Map<HumanEntity, RPGPlayerStat> stat;
 	private Plugin p;
 	private SkillTreeMenu spawnedSkillTreeMenu;
+	private int startingpoint;
 	
 	public SkillTreeMenu(int startingpoint, Map<HumanEntity, RPGPlayerStat> playerStats, RPGPlayerStat stats, Plugin p) {
 		System.out.println("Called with ID: " + startingpoint);
+		this.startingpoint = startingpoint;
 		this.stat = playerStats;
 		inv = Bukkit.getServer().createInventory(null, 54, "Skill Tree (#" + startingpoint + ")");
 		List<Skill> connectedNodes = stats.getSkillTree().outEdgesSkills(startingpoint);
@@ -61,9 +63,11 @@ public class SkillTreeMenu implements Listener {
 					last = createActive(as.getItem(), 1, as.getChatColor() + as.getName(), as.getDescription(), "Learn " + as.getChatColor() + as.getName());
 				}
 			}
-			SkillItems.put(last, s);
-			inv.setItem(pos, last);
-			pos++;
+			if(s.getID() != startingpoint || startingpoint == 0) {
+				SkillItems.put(last, s);
+				inv.setItem(pos, last);
+				pos++;
+			}
 		}
 		
 		Bukkit.getServer().getPluginManager().registerEvents(this, p);
@@ -71,6 +75,7 @@ public class SkillTreeMenu implements Listener {
 	}
 	
 	private ItemStack createAttribute(DyeColor dc, int skillcount, String name, String... desc) {
+		System.out.println(dc.toString() + " | " + skillcount + " | " + name);
 		ItemStack i = new Wool(dc).toItemStack(skillcount);
 		ItemMeta im = i.getItemMeta();
         im.setDisplayName(name);
@@ -128,18 +133,22 @@ public class SkillTreeMenu implements Listener {
 				if(learn instanceof PassiveSkill) {
 					PassiveSkill ps = (PassiveSkill) learn;
 					if(ps.getSkillEffect() != null) {
-						ps.getSkillEffect().executeEffect(e.getWhoClicked());
+						ps.getSkillEffect().executeEffect(e.getWhoClicked(), p);
 					}
 				}
 				SkillItems.remove(e.getWhoClicked());
 			} else {
 				if(s.getLearnedSkills().contains(learn)) {
-					spawnedSkillTreeMenu = new SkillTreeMenu(learn.getID(), stat, stat.get(e.getWhoClicked()), p);
-					e.getWhoClicked().closeInventory();
-					spawnedSkillTreeMenu.show(e.getWhoClicked());
+					if(learn.getID() != startingpoint) {
+						spawnedSkillTreeMenu = new SkillTreeMenu(learn.getID(), stat, stat.get(e.getWhoClicked()), p);
+						e.getWhoClicked().closeInventory();
+						spawnedSkillTreeMenu.show(e.getWhoClicked());
+					} else {
+						e.getWhoClicked().sendMessage(ChatColor.DARK_RED + "This is the same skill!");
+					}
 					return;
 				} else {
-					e.getWhoClicked().sendMessage(ChatColor.DARK_RED + "You can't learn this Skill!");
+					e.getWhoClicked().sendMessage(ChatColor.DARK_RED + "You can't learn this skill!");
 				}
 			}
 			e.getWhoClicked().closeInventory();

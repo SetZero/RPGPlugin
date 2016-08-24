@@ -8,9 +8,10 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import eu.around_me.rpgplugin.commands.Skillbind;
-import eu.around_me.rpgplugin.libary.JoinHandler;
-import eu.around_me.rpgplugin.libary.SkillbindHandler;
+import eu.around_me.rpgplugin.libary.handlers.JoinHandler;
+import eu.around_me.rpgplugin.libary.handlers.SkillbindHandler;
 import eu.around_me.rpgplugin.libary.handlers.Timer;
+import eu.around_me.rpgplugin.listeners.CombatCheck;
 import eu.around_me.rpgplugin.listeners.ExpChange;
 import eu.around_me.rpgplugin.listeners.MenuPlugin;
 import eu.around_me.rpgplugin.listeners.PlayerJoin;
@@ -39,6 +40,7 @@ public class RPGPluginMain extends JavaPlugin {
 
 		this.getCommand("skillbind").setExecutor(new Skillbind(playerStats));
 		getServer().getPluginManager().registerEvents(new SkillbindHandler(playerStats), this);
+		getServer().getPluginManager().registerEvents(new CombatCheck(playerStats), this);
 		
 
 		MenuPlugin mainmenu = new MenuPlugin(playerStats, this);
