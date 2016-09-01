@@ -2,6 +2,7 @@ package eu.around_me.rpgplugin.listeners;
 
 import java.util.Map;
 
+import org.bukkit.Sound;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -49,6 +50,7 @@ public class ExpChange implements Listener {
 					else
 						stat.setEXP((stat.getEXP() % stat.getExpToLevelUp()));
 					stat.levelUp();
+					p.getWorld().playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 3.0F, 0.5F);
 					// set new expToLevelUp cap
 					stat.setExpToLevelUp((int) ((scale * 32) * ((double) puffer / 8)
 							- ((scale - 1) * 32) * (((double) puffer - 1) / 8)));

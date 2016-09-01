@@ -11,5 +11,7 @@ public abstract class ActiveSkill extends Skill {
 	public abstract ItemStack getItem();
 	public abstract int getCooldown();
 	public abstract int getManacost();
+	public abstract boolean needsUnload();
+	public abstract void unload();
 
 }

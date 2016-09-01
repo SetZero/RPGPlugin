@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import eu.around_me.rpgplugin.commands.Skillbind;
 import eu.around_me.rpgplugin.libary.handlers.JoinHandler;
+import eu.around_me.rpgplugin.libary.handlers.QuitHandler;
 import eu.around_me.rpgplugin.libary.handlers.SkillbindHandler;
 import eu.around_me.rpgplugin.libary.handlers.Timer;
 import eu.around_me.rpgplugin.listeners.CombatCheck;
@@ -26,7 +27,7 @@ public class RPGPluginMain extends JavaPlugin {
 	
 	@Override
     public void onEnable() {
-		DefaultSkillTree tree = new DefaultSkillTree(this);
+		DefaultSkillTree tree = new DefaultSkillTree(this, playerStats);
 		
 		ExpChange exp = new ExpChange(playerStats);
 		PlayerJoin join = new PlayerJoin(playerStats, tree.getSkillTree(), this);
@@ -55,7 +56,9 @@ public class RPGPluginMain extends JavaPlugin {
     // Fired when plugin is disabled
     @Override
     public void onDisable() {
-    	
+    	for(Player p : Bukkit.getOnlinePlayers()){
+    		QuitHandler.playerQuit(playerStats, p);
+    	}
     }
     
 }

@@ -19,36 +19,35 @@ import eu.around_me.rpgplugin.skills.Skill;
 import net.md_5.bungee.api.ChatColor;
 
 public class RPGPlayerStat {
-	private int str = 0;
-	private int dex = 0;
-	private int wis = 0;
-	private int level = 0;
-	private int skillpoints = 0;
-	private int exp = 0;
+	private int str = 0;													//The strenght of a Player
+	private int dex = 0;													//The dexterity
+	private int wis = 0;													//The Wisdom aka Intelligence
+	private int level = 0;													//Player Level
+	private int skillpoints = 0;											//The available Skillpoints
+	private int exp = 0;													//The current Exp-Points
 	//Mana
-	private int mana = 50;
-	private int maxmana = 100;
-	private int manaregen = 2;
-	private int manaloss = 2;
-	private int outofcombattimer = 0;
-	private Manatypes manatype = Manatypes.MANA;
-	private ChatColor manabarcolor = ChatColor.BLUE;
+	private int mana = 50;													//The current Mana
+	private int maxmana = 100;												//The Maximum Mana
+	private int manaregen = 2;												//The Maximum Mana regeneration
+	private int manaloss = 2;												//The Loss of Mana if Mana is aggro/rage
+	private int outofcombattimer = 0;										//The Time in secounds a player hasn't fought
+	private Manatypes manatype = Manatypes.MANA;							//The Type of Mana (/Aggro/Energy)
+	private ChatColor manabarcolor = ChatColor.BLUE;						//The color of the Mana
 	//Shield
-	private boolean hasShield = true;
-	private int maxShield = 40;
-	private int Shield = 10;
-	private ShieldRegenTypes shieldRegenType = ShieldRegenTypes.OFFBATTLE;
-	private int shieldRegen = 2;
-	//TRYOUT: expToLevelUp -- Exp needed to levelup and get skillpoints
-	private int expToLevelUp = 0;
-	private FileHandler fh;
-	private Sidebar sb;
-	private Map<Material, Skill> bindSkills;
-	private Map<Skill, Integer> cooldowns;
+	private boolean hasShield = false;										//Has the Player a Shield?
+	private int maxShield = 0;												//Maximum Shield a Player can regenerate
+	private int Shield = 0;													//The current shield amount
+	private ShieldRegenTypes shieldRegenType = ShieldRegenTypes.OFFBATTLE;	//The Shield regeneration Type (On/Offbattle)
+	private int shieldRegen = 2;											//The amount a shield regenerates per second/action
+	//TRYOUT: expToLevelUp -- Exp needed to levelup and get skillpoints	
+	private int expToLevelUp = 0;											//The amount of exp for the next Level
+	private FileHandler fh;													//The File Handler for a player to save the data to
+	private Sidebar sb;														//The Sidebar of a player
+	private Map<Material, Skill> bindSkills;								//The bound Skills (to objects)
+	private Map<Skill, Integer> cooldowns;									//The Cooldowns of all Skills
 	
-	
-	List<Skill> learned = new ArrayList<Skill>();
-	AdjacencyMatrix skillTree;
+	List<Skill> learned = new ArrayList<Skill>();							//The Learned Skills
+	AdjacencyMatrix skillTree;												//The Skill Tree
 	
 	public RPGPlayerStat(int str, int dex, int wis, AdjacencyMatrix skillTree, FileHandler fh) {
 		this.str = str;
@@ -156,6 +155,10 @@ public class RPGPlayerStat {
 	
 	public Manatypes getManatype() {
 		return manatype;
+	}
+	
+	public void setManatype(Manatypes type) {
+		this.manatype = type;
 	}
 
 	public int getManaloss() {

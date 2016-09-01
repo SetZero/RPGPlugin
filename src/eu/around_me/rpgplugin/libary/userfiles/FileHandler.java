@@ -13,6 +13,7 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.plugin.Plugin;
 
 import eu.around_me.rpgplugin.libary.AdjacencyMatrix;
+import eu.around_me.rpgplugin.libary.Manatypes;
 import eu.around_me.rpgplugin.playerstats.RPGPlayerStat;
 import eu.around_me.rpgplugin.skills.Skill;
 
@@ -46,6 +47,9 @@ public class FileHandler {
 	            playerData.set("level.next", 0);
 	            playerData.set("level.exp", 0);
 	            
+	            playerData.createSection("mana");
+	            playerData.set("mana.type", Manatypes.MANA.name());
+	            
 	
 	            playerData.createSection("learned");
 	            playerData.save(f);
@@ -75,6 +79,8 @@ public class FileHandler {
             playerData.set("level.exp", stats.getEXP());
             playerData.set("level.skillpoints", stats.getSkillpoints());
             
+            playerData.set("mana.type", stats.getManatype().name());
+            
             List<Integer> skills = new ArrayList<Integer>();
             for(Skill s: stats.getLearnedSkills()) {
             	skills.add(s.getID());
@@ -102,6 +108,8 @@ public class FileHandler {
 				int exp = playerData.getInt("level.exp");
 				int skillpoints = playerData.getInt("level.skillpoints");
 				
+				Manatypes manatype = Manatypes.valueOf(playerData.getString("mana.type"));
+				
 				List<Integer> l = playerData.getIntegerList("learned.skills");
 				
 				
@@ -110,6 +118,7 @@ public class FileHandler {
 				stat.setLevel(lvl);
 				stat.setExpToLevelUp(next);
 				stat.setSkillpoints(skillpoints);
+				stat.setManatype(manatype);
 				
 				for(int i: l) {
 					stat.learnByID(i);

@@ -1,5 +1,5 @@
 package eu.around_me.rpgplugin.libary;
 
 public enum ShieldRegenTypes {
-	BATTLE, OFFBATTLE
+	BATTLE, OFFBATTLE, DAMAGE_DEALT
 }

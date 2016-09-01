@@ -37,6 +37,16 @@ public class Shield extends ActiveSkill {
 	}
 
 	@Override
+	public boolean needsUnload() {
+		return false;
+	}
+
+	@Override
+	public void unload() {
+		
+	}
+	
+	@Override
 	public String getName() {
 		return skillName;
 	}
@@ -96,6 +106,7 @@ public class Shield extends ActiveSkill {
 	}
 	
 	protected void placeShield(World w, Material m, Location l, RPGPlayerStat stat, int r) {
+		//Sphere Code
 		int x = (int) (l.getX() - r);
 		int y = (int) (l.getY() - r);
 		int z = (int) (l.getZ() - r);

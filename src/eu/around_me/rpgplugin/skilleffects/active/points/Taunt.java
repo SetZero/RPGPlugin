@@ -40,6 +40,16 @@ public class Taunt extends ActiveSkill {
 		tauntEnemies(p);
 		return true;
 	}
+	
+	@Override
+	public boolean needsUnload() {
+		return false;
+	}
+
+	@Override
+	public void unload() {
+		
+	}
 
 	@Override
 	public String getName() {
