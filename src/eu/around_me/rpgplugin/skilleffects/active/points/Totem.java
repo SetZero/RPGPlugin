@@ -16,7 +16,6 @@ import org.bukkit.entity.SmallFireball;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
@@ -185,7 +184,6 @@ public class Totem extends ActiveSkill {
 		        
 	            @Override
 	            public void run() {
-	                // What you want to schedule goes here
 	            	attack(p);
 	            	lifetime++;
 	            	if(lifetime > maxLifetime) {
