@@ -6,6 +6,13 @@ public abstract class Skill {
 	private static int idcounter = 0;
 	private int id = 0;
 	
+	protected String skillName;
+	protected String skillDesc;
+	protected ChatColor skillColor;
+	protected Skill[] req;
+	protected boolean prevReq;
+	protected int prevAmount;
+	
 	public Skill() {
 		id = idcounter;
 		idcounter++;
@@ -13,15 +20,51 @@ public abstract class Skill {
 	public int getID() {
 		return id;
 	}
-	public abstract String getName();
-	public abstract String setName(String name);
-	public abstract String getDescription();
-	public abstract void setDescription(String desc);
-	public abstract ChatColor getChatColor();
-	public abstract void setChatColor(ChatColor color);
-	public abstract void setSkillRequirements(Skill[] req);
-	public abstract Skill[] getSkillRequirements();
-	public abstract void setNodeRequirements(boolean prevReq, int prevAmount);
-	public abstract int getNodeRequirements();
+	public String getName() {
+		return skillName;
+	}
+	
+	public String setName(String name) {
+		this.skillName = name;
+		return null;
+	}
+	
+	public String getDescription() {
+		return skillDesc;
+	}
+	
+	public void setDescription(String desc) {
+		this.skillDesc = desc;
+	}
+	
+	public ChatColor getChatColor() {
+		return skillColor;
+	}
+	
+	public void setChatColor(ChatColor color) {
+		this.skillColor = color;
+
+	}
+	
+	public void setSkillRequirements(Skill[] req) {
+		this.req = req;
+
+	}
+	
+	public Skill[] getSkillRequirements() {
+		return req;
+	}
+	public void setNodeRequirements(boolean prevReq, int prevAmount) {
+		this.prevReq = prevReq;
+		this.prevAmount = prevAmount;
+
+	}
+	public int getNodeRequirements() {
+		if(prevReq) {
+			return prevAmount;
+		} else {
+			return 0;
+		}
+	}
 
 }

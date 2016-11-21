@@ -12,20 +12,9 @@ import org.bukkit.plugin.Plugin;
 
 import eu.around_me.rpgplugin.playerstats.RPGPlayerStat;
 import eu.around_me.rpgplugin.skills.ActiveSkill;
-import eu.around_me.rpgplugin.skills.Skill;
 import net.md_5.bungee.api.ChatColor;
 
 public class Taunt extends ActiveSkill {
-
-	String skillName = "Taunt";
-	String skillDesc = "Taunts nearby enemies";
-	ChatColor skillColor = ChatColor.DARK_RED;
-	ItemStack skillItem = new ItemStack(Material.GOLD_SWORD);
-	Skill[] req = {};
-	boolean prevReq = false;
-	int prevAmount = 0;
-	private int cooldown = 10;
-	private int manacost = 5;
 	
 	//Custom
 	private int distance = 40;
@@ -33,6 +22,17 @@ public class Taunt extends ActiveSkill {
 	
 	public Taunt(Plugin plugin) {
 		this.plugin = plugin;
+		
+		skillName = "Taunt";
+		skillDesc = "Taunts nearby enemies";
+		skillColor = ChatColor.DARK_RED;
+		req = null;
+		prevReq = false;
+		prevAmount = 0;
+		
+		skillItem = new ItemStack(Material.GOLD_SWORD);
+		cooldown = 10;
+		manacost = 5;
 	}
 
 	@Override
@@ -50,65 +50,6 @@ public class Taunt extends ActiveSkill {
 	public void unload() {
 		
 	}
-
-	@Override
-	public String getName() {
-		return skillName;
-	}
-
-	@Override
-	public String setName(String name) {
-		this.skillName = name;
-		return null;
-	}
-
-	@Override
-	public String getDescription() {
-		return skillDesc;
-	}
-
-	@Override
-	public void setDescription(String desc) {
-		this.skillDesc = desc;
-	}
-
-	@Override
-	public ChatColor getChatColor() {
-		return skillColor;
-	}
-
-	@Override
-	public void setChatColor(ChatColor color) {
-		this.skillColor = color;
-
-	}
-
-	@Override
-	public void setSkillRequirements(Skill[] req) {
-		this.req = req;
-
-	}
-
-	@Override
-	public Skill[] getSkillRequirements() {
-		return req;
-	}
-
-	@Override
-	public void setNodeRequirements(boolean prevReq, int prevAmount) {
-		this.prevReq = prevReq;
-		this.prevAmount = prevAmount;
-
-	}
-
-	@Override
-	public int getNodeRequirements() {
-		if(prevReq) {
-			return prevAmount;
-		} else {
-			return 0;
-		}
-	}
 	
 	protected void tauntEnemies(HumanEntity p) {
 		List<Entity> mobs = p.getNearbyEntities(distance, distance, distance);
@@ -121,21 +62,6 @@ public class Taunt extends ActiveSkill {
 				w.setTarget(p);
 			}
 		}
-	}
-
-	@Override
-	public ItemStack getItem() {
-		return this.skillItem;
-	}
-
-	@Override
-	public int getCooldown() {
-		return this.cooldown;
-	}
-
-	@Override
-	public int getManacost() {
-		return manacost;
 	}
 
 }

@@ -10,24 +10,23 @@ import org.bukkit.plugin.Plugin;
 import eu.around_me.rpgplugin.libary.WorldEditing;
 import eu.around_me.rpgplugin.playerstats.RPGPlayerStat;
 import eu.around_me.rpgplugin.skills.ActiveSkill;
-import eu.around_me.rpgplugin.skills.Skill;
 import net.md_5.bungee.api.ChatColor;
 
 public class Shield extends ActiveSkill {
-
-	String skillName = "Shield";
-	String skillDesc = "Generate a Shield around you";
-	ChatColor skillColor = ChatColor.GRAY;
-	ItemStack skillItem = new ItemStack(Material.SHIELD);
-	Skill[] req = {};
-	boolean prevReq = false;
-	int prevAmount = 0;
-	private int cooldown = 4;
-	private int manacost = 20;
 	Plugin plugin;
 	
 	public Shield(Plugin plugin) {
 		this.plugin = plugin;
+		
+		skillName = "Shield";
+		skillDesc = "Generate a Shield around you";
+		skillColor = ChatColor.GRAY;
+		skillItem = new ItemStack(Material.SHIELD);
+		req = null;
+		prevReq = false;
+		prevAmount = 0;
+		cooldown = 4;
+		manacost = 20;
 	}
 
 	@Override
@@ -44,65 +43,6 @@ public class Shield extends ActiveSkill {
 	@Override
 	public void unload() {
 		
-	}
-	
-	@Override
-	public String getName() {
-		return skillName;
-	}
-
-	@Override
-	public String setName(String name) {
-		this.skillName = name;
-		return null;
-	}
-
-	@Override
-	public String getDescription() {
-		return skillDesc;
-	}
-
-	@Override
-	public void setDescription(String desc) {
-		this.skillDesc = desc;
-	}
-
-	@Override
-	public ChatColor getChatColor() {
-		return skillColor;
-	}
-
-	@Override
-	public void setChatColor(ChatColor color) {
-		this.skillColor = color;
-
-	}
-
-	@Override
-	public void setSkillRequirements(Skill[] req) {
-		this.req = req;
-
-	}
-
-	@Override
-	public Skill[] getSkillRequirements() {
-		return req;
-	}
-
-	@Override
-	public void setNodeRequirements(boolean prevReq, int prevAmount) {
-		this.prevReq = prevReq;
-		this.prevAmount = prevAmount;
-
-	}
-
-	@Override
-	public int getNodeRequirements() {
-		if(prevReq) {
-			return prevAmount;
-		} else {
-			return 0;
-		}
 	}
 	
 	protected void placeShield(World w, Material m, Location l, RPGPlayerStat stat, int r) {

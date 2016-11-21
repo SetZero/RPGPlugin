@@ -22,20 +22,11 @@ import org.bukkit.util.Vector;
 
 import eu.around_me.rpgplugin.playerstats.RPGPlayerStat;
 import eu.around_me.rpgplugin.skills.ActiveSkill;
-import eu.around_me.rpgplugin.skills.Skill;
 import net.md_5.bungee.api.ChatColor;
 
 public class Totem extends ActiveSkill {
 
-	String skillName = "Totem";
-	String skillDesc = "Place a Totem around you";
-	ChatColor skillColor = ChatColor.GOLD;
-	ItemStack skillItem = new ItemStack(Material.ARMOR_STAND);
-	Skill[] req = {};
-	boolean prevReq = false;
-	int prevAmount = 0;
-	private int cooldown = 10;
-	private int manacost = 25;
+
 	
 	//Custom
 	private int range = 40;
@@ -48,6 +39,16 @@ public class Totem extends ActiveSkill {
 	
 	public Totem(Plugin plugin) {
 		this.plugin = plugin;
+		
+		skillName = "Totem";
+		skillDesc = "Place a Totem around you";
+		skillColor = ChatColor.GOLD;
+		skillItem = new ItemStack(Material.ARMOR_STAND);
+		req = null;
+		prevReq = false;
+		prevAmount = 0;
+		cooldown = 10;
+		manacost = 25;
 	}
 
 	@Override
@@ -67,80 +68,6 @@ public class Totem extends ActiveSkill {
 			task.cancel();
 		if(as != null)
 			as.remove();
-	}
-
-	@Override
-	public String getName() {
-		return skillName;
-	}
-
-	@Override
-	public String setName(String name) {
-		this.skillName = name;
-		return null;
-	}
-
-	@Override
-	public String getDescription() {
-		return skillDesc;
-	}
-
-	@Override
-	public void setDescription(String desc) {
-		this.skillDesc = desc;
-	}
-
-	@Override
-	public ChatColor getChatColor() {
-		return skillColor;
-	}
-
-	@Override
-	public void setChatColor(ChatColor color) {
-		this.skillColor = color;
-
-	}
-
-	@Override
-	public void setSkillRequirements(Skill[] req) {
-		this.req = req;
-
-	}
-
-	@Override
-	public Skill[] getSkillRequirements() {
-		return req;
-	}
-
-	@Override
-	public void setNodeRequirements(boolean prevReq, int prevAmount) {
-		this.prevReq = prevReq;
-		this.prevAmount = prevAmount;
-
-	}
-
-	@Override
-	public int getNodeRequirements() {
-		if(prevReq) {
-			return prevAmount;
-		} else {
-			return 0;
-		}
-	}
-
-	@Override
-	public ItemStack getItem() {
-		return this.skillItem;
-	}
-
-	@Override
-	public int getCooldown() {
-		return this.cooldown;
-	}
-
-	@Override
-	public int getManacost() {
-		return manacost;
 	}
 	
 	public void placeTotem(HumanEntity p, RPGPlayerStat stat) {
