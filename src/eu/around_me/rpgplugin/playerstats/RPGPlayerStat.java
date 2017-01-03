@@ -296,9 +296,11 @@ public class RPGPlayerStat {
 					int connected = skillTree.inEdges(position[0]).size();
 					if(connected < learn.getNodeRequirements()) return false;
 				}
-				for(Skill reqskill : req) {
-					if(!learned.contains(reqskill))
-						return false;
+				if(req != null) {
+					for(Skill reqskill : req) {
+						if(!learned.contains(reqskill))
+							return false;
+					}
 				}
 				
 				learned.add(learn);
