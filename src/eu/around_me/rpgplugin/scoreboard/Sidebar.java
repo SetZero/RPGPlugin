@@ -17,7 +17,7 @@ public class Sidebar {
 	public Sidebar(RPGPlayerStat stat, HumanEntity player) {
 		this.stat = stat;
 		this.player = player;
-		if(stat != null) {
+		if(stat != null && stat.getShowSidebar()) {
 			sidebarRefresh();
 		}
 	}
@@ -41,7 +41,9 @@ public class Sidebar {
 		
 		if(player instanceof Player) {
 			Player p = (Player) player;
-			p.setScoreboard(sb);
+			if(stat != null && stat.getShowSidebar()) {
+				p.setScoreboard(sb);
+			}
 		}
 	}
 }

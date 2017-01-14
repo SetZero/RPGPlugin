@@ -49,6 +49,9 @@ public class RPGPlayerStat {
 	List<Skill> learned = new ArrayList<Skill>();							//The Learned Skills
 	AdjacencyMatrix skillTree;												//The Skill Tree
 	
+	//Settings
+	private boolean showSidebar = false;
+	
 	public RPGPlayerStat(int str, int dex, int wis, AdjacencyMatrix skillTree, FileHandler fh) {
 		this.str = str;
 		this.dex = dex;
@@ -285,6 +288,14 @@ public class RPGPlayerStat {
 		return bindSkills.get(m);
 	}
 	
+	public boolean getShowSidebar() {
+		return showSidebar;
+	}
+
+	public void setShowSidebar(boolean showSidebar) {
+		this.showSidebar = showSidebar;
+	}
+	
 	public boolean learnSkill(Skill learn) {
 		if(skillpoints >= 1) {
 			if(!learned.contains(learn)) {
@@ -427,6 +438,8 @@ public class RPGPlayerStat {
 		
 		
 	}
+
+
 
 
 }

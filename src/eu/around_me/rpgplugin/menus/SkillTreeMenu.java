@@ -75,7 +75,7 @@ public class SkillTreeMenu implements Listener {
 	}
 	
 	private ItemStack createAttribute(DyeColor dc, int skillcount, String name, String... desc) {
-		System.out.println(dc.toString() + " | " + skillcount + " | " + name);
+		//System.out.println(dc.toString() + " | " + skillcount + " | " + name);
 		ItemStack i = new Wool(dc).toItemStack(skillcount);
 		ItemMeta im = i.getItemMeta();
         im.setDisplayName(name);
@@ -122,12 +122,14 @@ public class SkillTreeMenu implements Listener {
 		if (!e.getInventory().getName().equalsIgnoreCase(inv.getName())) return;
 		if (e.getCurrentItem().getItemMeta() == null) return;
 		RPGPlayerStat s = stat.get(e.getWhoClicked());
+		//System.out.println("Called: " + s);
 		Skill learn = SkillItems.get(e.getCurrentItem());
 		if(s == null) return;
 		if(learn != null) {
 			HandlerList.unregisterAll(spawnedSkillTreeMenu);
 			HandlerList.unregisterAll(this);
 			e.setCancelled(true);
+			//System.out.println("Called: " + s);
 			if(s.learnSkill(learn)) {
 				e.getWhoClicked().sendMessage("You learned: " + learn.getChatColor() + learn.getName());
 				if(learn instanceof PassiveSkill) {
@@ -158,14 +160,14 @@ public class SkillTreeMenu implements Listener {
 	  
 	public static void findNodes(AdjacencyMatrix am, Skill node, List<Integer> foundIDs) {
 		
-		System.out.println("Connected Nodes to " + node.getName() + "(" + node.getID() + "): ");
+		//System.out.println("Connected Nodes to " + node.getName() + "(" + node.getID() + "): ");
     	List<Skill> connectedNodes = am.inEdgesSkills(node.getID());
-    	int i = 0;
+    	/*int i = 0;
     	for (Skill temp : connectedNodes) {
     		i++;
-			System.out.println(i + ")" + temp.getName() + "(" + temp.getID() + ")");
+			//System.out.println(i + ")" + temp.getName() + "(" + temp.getID() + ")");
 		}
-    	System.out.println("");
+    	//System.out.println("");*/
     	for (Skill temp : connectedNodes) {
 			for (int id : foundIDs) {
 				if(id == node.getID())

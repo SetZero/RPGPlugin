@@ -7,6 +7,9 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import eu.around_me.rpgplugin.commands.GiveSkillbook;
+import eu.around_me.rpgplugin.commands.SidebarCommand;
 import eu.around_me.rpgplugin.commands.Skillbind;
 import eu.around_me.rpgplugin.libary.handlers.JoinHandler;
 import eu.around_me.rpgplugin.libary.handlers.QuitHandler;
@@ -40,6 +43,8 @@ public class RPGPluginMain extends JavaPlugin {
 		
 
 		this.getCommand("skillbind").setExecutor(new Skillbind(playerStats));
+		this.getCommand("togglesidebar").setExecutor(new SidebarCommand(playerStats));
+		this.getCommand("getskillbook").setExecutor(new GiveSkillbook());
 		getServer().getPluginManager().registerEvents(new SkillbindHandler(playerStats), this);
 		getServer().getPluginManager().registerEvents(new CombatCheck(playerStats), this);
 		

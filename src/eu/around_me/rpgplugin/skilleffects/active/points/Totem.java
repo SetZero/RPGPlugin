@@ -99,7 +99,7 @@ public class Totem extends ActiveSkill {
 			as.setItemInHand(new ItemStack(Material.BOW));
 			as.setCustomName(ChatColor.RED + pl.getName() + "'s Totem");
 			as.setCustomNameVisible(true);
-			as.setMaxHealth((stat.getWis()+1)*2);
+			//as.setMaxHealth((stat.getWis()+1)*2);
 			as.setHealth((stat.getWis()+1)*2);
 			as.setCollidable(true);
 			as.setLeashHolder(p);

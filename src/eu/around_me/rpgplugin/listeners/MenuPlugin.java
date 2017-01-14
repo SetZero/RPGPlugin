@@ -22,6 +22,7 @@ import eu.around_me.rpgplugin.playerstats.RPGPlayerStat;
 public class MenuPlugin implements Listener {
 	private MainMenu menu;
 	private Material buildTool;
+	private String itemName;
 
 	public MenuPlugin(Map<HumanEntity, RPGPlayerStat> playerStats, Plugin p) {
 		menu = new MainMenu(playerStats, p);
@@ -32,7 +33,9 @@ public class MenuPlugin implements Listener {
 	    Action a = e.getAction();
 		
 		if(buildTool == null) buildTool = Material.BOOK;
-		if ((a == Action.PHYSICAL) || (e.getItem() == null) || (e.getItem().getType() != buildTool)) return;
+		if(itemName == null) itemName = "Skill Book";
+		if ((a == Action.PHYSICAL) || (e.getItem() == null) || (e.getItem().getType() != buildTool) ||
+				!(e.getItem().getItemMeta().getDisplayName().equals(itemName))) return;
 		menu.show(e.getPlayer());
 	}
 }

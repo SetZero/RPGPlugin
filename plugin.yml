@@ -5,3 +5,9 @@ commands:
   skillbind:
     description: Bind a skill to a item
     usage: /skillbind [skillname]
+  togglesidebar:
+    description: Hides/Shows the sidebar
+    usage: /togglesidebar
+  getskillbook:
+    description: Recive a Skillbook
+    usage: /getskillbook    

@@ -29,7 +29,7 @@ import net.md_5.bungee.api.ChatColor;
 public class MainMenu implements Listener {
 		private Inventory inv;
 		private ItemStack c, s, i;
-		private ItemStack dbg_1;
+		//private ItemStack dbg_1;
 		private Map<HumanEntity, RPGPlayerStat> stat;
 		private Plugin p;
 		private SkillTreeMenu spawnedSkillTreeMenu;
@@ -42,15 +42,15 @@ public class MainMenu implements Listener {
 			//All Menu Elements
 			s = createAttribute(DyeColor.GREEN, 1, ChatColor.GREEN + "Player Status", "Get your current Player Progress", "");
 			i = createAttribute(DyeColor.BLUE, 1, ChatColor.BLUE + "Skill Tree", "View your current Skill Tree", "");
-			c = createAttribute(DyeColor.RED, 1, ChatColor.RED + "Placeholder", "don't mind me", ChatColor.RED + "LOL " + ChatColor.WHITE + "+1");
+			c = createAttribute(DyeColor.RED, 1, ChatColor.RED + "EXIT", "leave menu", "");
 	
-			dbg_1 = createAttribute(DyeColor.BLACK, 1, ChatColor.RED + "Level Up", "Take me to Hell!", ChatColor.RED + "LVL " + ChatColor.WHITE + "+1");
+			//dbg_1 = createAttribute(DyeColor.BLACK, 1, ChatColor.RED + "Level Up", "Take me to Hell!", ChatColor.RED + "LVL " + ChatColor.WHITE + "+1");
 			
 			//Sets their position
 			inv.setItem(2, c);
 			inv.setItem(4, s);
 			inv.setItem(6, i);
-			inv.setItem(11, dbg_1);
+			//inv.setItem(11, dbg_1);
 	
 			Bukkit.getServer().getPluginManager().registerEvents(this, p);
 		}
@@ -103,16 +103,15 @@ public class MainMenu implements Listener {
 			e.getWhoClicked().closeInventory();
 			spawnedSkillTreeMenu.show(e.getWhoClicked());
 		}
-		if(e.getCurrentItem().getItemMeta().getDisplayName().contains("Placeholder")) {
+		if(e.getCurrentItem().getItemMeta().getDisplayName().contains("EXIT")) {
 			e.setCancelled(true);
-			e.getWhoClicked().sendMessage("Ok?!");
 			e.getWhoClicked().closeInventory();
 		}
-		if(e.getCurrentItem().getItemMeta().getDisplayName().contains("Level Up")) {
+		/*if(e.getCurrentItem().getItemMeta().getDisplayName().contains("Level Up")) {
 			e.setCancelled(true);
 			e.getWhoClicked().sendMessage("You feel much better now!");
 			stat.get(e.getWhoClicked()).levelUp();
 			e.getWhoClicked().closeInventory();
-		}
+		}*/
 	}
 }
