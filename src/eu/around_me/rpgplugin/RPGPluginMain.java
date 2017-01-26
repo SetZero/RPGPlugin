@@ -8,7 +8,7 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import eu.around_me.rpgplugin.commands.GiveSkillbook;
+import eu.around_me.rpgplugin.commands.ShowSkillMenu;
 import eu.around_me.rpgplugin.commands.SidebarCommand;
 import eu.around_me.rpgplugin.commands.SidebarDisplay;
 import eu.around_me.rpgplugin.commands.Skillbind;
@@ -19,6 +19,7 @@ import eu.around_me.rpgplugin.libary.handlers.Timer;
 import eu.around_me.rpgplugin.listeners.CombatCheck;
 import eu.around_me.rpgplugin.listeners.ExpChange;
 import eu.around_me.rpgplugin.listeners.MenuPlugin;
+import eu.around_me.rpgplugin.listeners.PlayerDeath;
 import eu.around_me.rpgplugin.listeners.PlayerJoin;
 import eu.around_me.rpgplugin.listeners.PlayerQuit;
 import eu.around_me.rpgplugin.playerstats.RPGPlayerStat;
@@ -46,10 +47,11 @@ public class RPGPluginMain extends JavaPlugin {
 		this.getCommand("skillbind").setExecutor(new Skillbind(playerStats));
 		this.getCommand("togglesidebar").setExecutor(new SidebarCommand(playerStats));
 		this.getCommand("sidebardisplay").setExecutor(new SidebarDisplay(playerStats));
-		this.getCommand("getskillbook").setExecutor(new GiveSkillbook());
+		this.getCommand("showskillmenu").setExecutor(new ShowSkillMenu(playerStats, this));
 		
 		getServer().getPluginManager().registerEvents(new SkillbindHandler(playerStats), this);
 		getServer().getPluginManager().registerEvents(new CombatCheck(playerStats), this);
+		getServer().getPluginManager().registerEvents(new PlayerDeath(playerStats), this);
 		
 
 		MenuPlugin mainmenu = new MenuPlugin(playerStats, this);

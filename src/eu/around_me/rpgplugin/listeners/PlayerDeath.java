@@ -26,5 +26,9 @@ public class PlayerDeath implements Listener{
 		int totalloss = (int) (stat.getEXP() * loss);
 		stat.setEXP(totalloss);
 		e.getEntity().sendMessage(ChatColor.RED + "You died and lost " + totalloss + " EXP!");
+		if(stat.getHasShield()) {
+			stat.setShield(stat.getMaxShield());
+		}
+		stat.setMana(stat.getMaxmana());
 	}
 }

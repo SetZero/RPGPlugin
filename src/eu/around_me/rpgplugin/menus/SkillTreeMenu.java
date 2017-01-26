@@ -148,6 +148,7 @@ public class SkillTreeMenu implements Listener {
 			//System.out.println("Called: " + s);
 			if(s.learnSkill(learn)) {
 				e.getWhoClicked().sendMessage("You learned: " + learn.getChatColor() + learn.getName());
+				s.getSb().sidebarRefresh();
 				if(learn instanceof PassiveSkill) {
 					PassiveSkill ps = (PassiveSkill) learn;
 					if(ps.getSkillEffect() != null) {

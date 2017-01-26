@@ -43,6 +43,8 @@ public class EnergyShield extends PassiveSkillEffects implements Listener{
 
 	@Override
 	public void unloadEffect(HumanEntity p) {
+		RPGPlayerStat stat = playerStats.get(p);
+		stat.setMaxShield(stat.getMaxShield() - shieldBonus);
 	}
 
 }

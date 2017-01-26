@@ -8,9 +8,9 @@ commands:
   togglesidebar:
     description: Hides/Shows the sidebar
     usage: /togglesidebar
-  getskillbook:
-    description: Recive a Skillbook
-    usage: /getskillbook    
+  showskillmenu:
+    description: Show the Skill Menu
+    usage: /showskillmenu    
   sidebardisplay:
     description: Toggle absolute values in the Sidebar
     usage: /sidebardisplay [toggleabs]    

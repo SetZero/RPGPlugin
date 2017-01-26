@@ -69,7 +69,7 @@ public class DefaultSkillTree
 			new PassiveSkillPoint("Into Battle!", "You regenerate your shield\n now by the damage you dealt",
 					ChatColor.BLACK, new EnergyShield(ShieldRegenTypes.DAMAGE_DEALT, 5, playerStats), SkillPoints.CUSTOM, null), 		
 			new PassiveSkillPoint("Risky Gamble", "You now have 1 Health,\n but you Energyshield is 20% more efficient\n and you get additional 20 Energy Shield",
-					ChatColor.DARK_RED, new HighCostEnergyShield(playerStats, 20, 20), SkillPoints.CUSTOM, null),
+					ChatColor.DARK_RED, new HighCostEnergyShield(playerStats, 0, 20), SkillPoints.CUSTOM, null),
 		};
 		
 		//------------------// Skill Matrix //----------------//

@@ -26,9 +26,9 @@ public class HighCostEnergyShield extends PassiveSkillEffects{
 	public void executeEffect(HumanEntity p, Plugin plugin) {
 		RPGPlayerStat stat = playerStats.get(p);
 		double shield = (100+shieldbonus) / 100D;
-		int totalshield = (int) ((stat.getShield() + flatamount) * shield);
+		int totalshield = (int) ((stat.getMaxShield() + flatamount) * shield);
 		
-		stat.setShield(totalshield);
+		stat.setMaxShield(totalshield);
 		stat.setOmniShield(true);
 		Player pl = (Player) p;
 		AttributeInstance health = pl.getAttribute(Attribute.GENERIC_MAX_HEALTH);
@@ -43,6 +43,11 @@ public class HighCostEnergyShield extends PassiveSkillEffects{
 			AttributeInstance health = pl.getAttribute(Attribute.GENERIC_MAX_HEALTH);
 			health.setBaseValue(20);
 		}
+		
+		RPGPlayerStat stat = playerStats.get(p);
+		double shield = (100-shieldbonus) / 100D;
+		int totalshield = (int) ((stat.getMaxShield() - flatamount) * shield);
+		stat.setMaxShield(totalshield);
 	}
 
 }

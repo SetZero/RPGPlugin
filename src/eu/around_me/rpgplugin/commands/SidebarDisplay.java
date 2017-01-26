@@ -28,6 +28,7 @@ private Map<HumanEntity, RPGPlayerStat> playerStats;
 				
 				stat.setShowAbsValuesInSidebar(!stat.isShowAbsValuesInSidebar());
 				p.sendMessage(ChatColor.AQUA + "Statinfo now shows " + (stat.isShowAbsValuesInSidebar() ? "absolute" : "relative") + " values");
+				stat.getSb().sidebarRefresh();
 			}
 			
 		}
