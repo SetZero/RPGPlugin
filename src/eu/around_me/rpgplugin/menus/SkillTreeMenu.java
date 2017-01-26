@@ -2,6 +2,7 @@ package eu.around_me.rpgplugin.menus;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -37,26 +38,41 @@ public class SkillTreeMenu implements Listener {
 	private int startingpoint;
 	
 	public SkillTreeMenu(int startingpoint, Map<HumanEntity, RPGPlayerStat> playerStats, RPGPlayerStat stats, Plugin p) {
-		System.out.println("Called with ID: " + startingpoint);
 		this.startingpoint = startingpoint;
 		this.stat = playerStats;
 		inv = Bukkit.getServer().createInventory(null, 54, "Skill Tree (#" + startingpoint + ")");
 		List<Skill> connectedNodes = stats.getSkillTree().outEdgesSkills(startingpoint);
 		this.p = p;
 		
-		ItemStack last = createAttribute(DyeColor.RED, 1, ChatColor.RED + "ERROR", "An unknown error occured!");
+		List<String> error = new LinkedList<String>();
+		error.add("An unknown error occured!");
+		ItemStack last = createAttribute(DyeColor.RED, 1, ChatColor.RED + "ERROR", error);
 		int pos = 0;
 		for(Skill s: connectedNodes) {
 			if(s instanceof PassiveSkillPoint) {
 				PassiveSkillPoint ps = (PassiveSkillPoint) s;
 				if(stats.getLearnedSkills().contains(s)) {
-					last = createLearnedAttribute(ps.getItemColor(), 1, ps.getChatColor() + ps.getName(), ps.getDescription(), ps.getChatColor() + ps.getName().substring(0, 3).toUpperCase() + ChatColor.WHITE + " +1");
+					List<String> descText = new LinkedList<String>();
+					String[] desc = ps.getDescription().split("\\r?\\n");
+					for(String d: desc) {
+						descText.add(d);
+					}
+					descText.add(ps.getChatColor() + ps.getName().substring(0, 3).toUpperCase() + ChatColor.WHITE + " +1");
+					last = createLearnedAttribute(ps.getItemColor(), 1, ps.getChatColor() + ps.getName(), descText);
 				} else {
-					last = createAttribute(ps.getItemColor(), 1, ps.getChatColor() + ps.getName(), ps.getDescription(), ps.getChatColor() + ps.getName().substring(0, 3).toUpperCase() + ChatColor.WHITE + " +1");
+					
+					List<String> descText = new LinkedList<String>();
+					String[] desc = ps.getDescription().split("\\r?\\n");
+					for(String d: desc) {
+						descText.add(d);
+					}
+					descText.add(ps.getChatColor() + ps.getName().substring(0, 3).toUpperCase() + ChatColor.WHITE + " +1");
+					
+							
+					last = createAttribute(ps.getItemColor(), 1, ps.getChatColor() + ps.getName(), descText);
 				}
 			} else if(s instanceof ActiveSkill) {
 				ActiveSkill as = (ActiveSkill) s;
-				System.out.println(as.getName());
 				if(stats.getLearnedSkills().contains(s)) {
 					last = createActive(as.getItem(), 1, as.getChatColor() + as.getName(), as.getDescription(), ChatColor.DARK_RED + "Learned " + as.getChatColor() + as.getName());
 				} else {
@@ -74,21 +90,21 @@ public class SkillTreeMenu implements Listener {
 		
 	}
 	
-	private ItemStack createAttribute(DyeColor dc, int skillcount, String name, String... desc) {
+	private ItemStack createAttribute(DyeColor dc, int skillcount, String name, List<String> desc) {
 		//System.out.println(dc.toString() + " | " + skillcount + " | " + name);
 		ItemStack i = new Wool(dc).toItemStack(skillcount);
 		ItemMeta im = i.getItemMeta();
         im.setDisplayName(name);
-		im.setLore(Arrays.asList(desc));
+		im.setLore(desc);
 		i.setItemMeta(im);
 		return i;
 	}
 	
-	private ItemStack createLearnedAttribute(DyeColor dc, int skillcount, String name, String... desc) {
+	private ItemStack createLearnedAttribute(DyeColor dc, int skillcount, String name, List<String> desc) {
 		ItemStack i = new ItemStack(Material.STAINED_GLASS, 1, (short) GlassColor.DyetoGlass(dc));
 		ItemMeta im = i.getItemMeta();
         im.setDisplayName(name);
-		im.setLore(Arrays.asList(desc));
+		im.setLore(desc);
 		i.setItemMeta(im);
 		return i;
 	}

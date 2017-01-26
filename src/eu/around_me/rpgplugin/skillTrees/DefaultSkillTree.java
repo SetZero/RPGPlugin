@@ -15,6 +15,7 @@ import eu.around_me.rpgplugin.skilleffects.active.points.Taunt;
 import eu.around_me.rpgplugin.skilleffects.active.points.Totem;
 import eu.around_me.rpgplugin.skilleffects.passive.points.BraceFall;
 import eu.around_me.rpgplugin.skilleffects.passive.points.EnergyShield;
+import eu.around_me.rpgplugin.skilleffects.passive.points.HighCostEnergyShield;
 import eu.around_me.rpgplugin.skilleffects.passive.points.ManaType;
 import eu.around_me.rpgplugin.skills.PassiveSkillPoint;
 import eu.around_me.rpgplugin.skills.Skill;
@@ -45,21 +46,30 @@ public class DefaultSkillTree
 			new PassiveSkillPoint(SkillPoints.INT, null),
 			new PassiveSkillPoint(SkillPoints.INT, null),
 			new PassiveSkillPoint(SkillPoints.DEX, null),
+			new PassiveSkillPoint(SkillPoints.STR, null),																				
 			new PassiveSkillPoint(SkillPoints.STR, null),
 			new PassiveSkillPoint(SkillPoints.STR, null),
-			new PassiveSkillPoint(SkillPoints.STR, null),
+			new PassiveSkillPoint(SkillPoints.DEX, null),																				
 			new PassiveSkillPoint(SkillPoints.DEX, null),
-			new PassiveSkillPoint(SkillPoints.DEX, null),
-			new Shield(p),
+			new Shield(p),																												
 			new Taunt(p),
-			new PassiveSkillPoint("Brace Fall", "You don't take damage from Falls", ChatColor.GOLD, new BraceFall(), SkillPoints.CUSTOM, null),
-			new PassiveSkillPoint("RAGE!!", "You have Rage instead of Mana", ChatColor.DARK_RED, new ManaType(Manatypes.AGGRO, playerStats), SkillPoints.CUSTOM, null),
-			new PassiveSkillPoint("EnergyShield", "You can defend yourself with a energy shield", ChatColor.DARK_PURPLE, new EnergyShield(ShieldRegenTypes.OFFBATTLE, 2, playerStats), SkillPoints.CUSTOM, null),
-			new PassiveSkillPoint("EnergyShield ENHANCED", "You become better with the shield", ChatColor.DARK_PURPLE, new EnergyShield(ShieldRegenTypes.OFFBATTLE, 5, playerStats), SkillPoints.CUSTOM, null),
-			new PassiveSkillPoint("EnergyShield ENHANCED", "You become better with the shield", ChatColor.DARK_PURPLE, new EnergyShield(ShieldRegenTypes.OFFBATTLE, 5, playerStats), SkillPoints.CUSTOM, null),
-			new PassiveSkillPoint("EnergyShield ENHANCED", "You become better with the shield", ChatColor.DARK_PURPLE, new EnergyShield(ShieldRegenTypes.OFFBATTLE, 5, playerStats), SkillPoints.CUSTOM, null),
-			new Totem(p),
-			new PassiveSkillPoint("Into Battle!", "You regenerate your shield now by the damage you dealt", ChatColor.BLACK, new EnergyShield(ShieldRegenTypes.DAMAGE_DEALT, 5, playerStats), SkillPoints.CUSTOM, null),
+			new PassiveSkillPoint("Brace Fall", "You take less fall damage",
+					ChatColor.GOLD, new BraceFall(), SkillPoints.CUSTOM, null),															
+			new PassiveSkillPoint("RAGE!!", "You have rage instead of Mana\n This regenerates while you are attacking enemies",			
+					ChatColor.DARK_RED, new ManaType(Manatypes.AGGRO, playerStats), SkillPoints.CUSTOM, null),
+			new PassiveSkillPoint("EnergyShield", "You have an Energy Shield,\n which blocks up to 10 damage",
+					ChatColor.DARK_PURPLE, new EnergyShield(ShieldRegenTypes.OFFBATTLE, 10, playerStats), SkillPoints.CUSTOM, null),
+			new PassiveSkillPoint("EnergyShield ENHANCED", "You increase your energy shield by 10",											
+					ChatColor.DARK_PURPLE, new EnergyShield(ShieldRegenTypes.OFFBATTLE, 10, playerStats), SkillPoints.CUSTOM, null),
+			new PassiveSkillPoint("EnergyShield ENHANCED", "You increase your energy shield by 10",
+					ChatColor.DARK_PURPLE, new EnergyShield(ShieldRegenTypes.OFFBATTLE, 10, playerStats), SkillPoints.CUSTOM, null),
+			new PassiveSkillPoint("EnergyShield ENHANCED", "You increase your energy shield by 10",
+					ChatColor.DARK_PURPLE, new EnergyShield(ShieldRegenTypes.OFFBATTLE, 10, playerStats), SkillPoints.CUSTOM, null),
+			new Totem(p),																												
+			new PassiveSkillPoint("Into Battle!", "You regenerate your shield\n now by the damage you dealt",
+					ChatColor.BLACK, new EnergyShield(ShieldRegenTypes.DAMAGE_DEALT, 5, playerStats), SkillPoints.CUSTOM, null), 		
+			new PassiveSkillPoint("Risky Gamble", "You now have 1 Health,\n but you Energyshield is 20% more efficient\n and you get additional 20 Energy Shield",
+					ChatColor.DARK_RED, new HighCostEnergyShield(playerStats, 20, 20), SkillPoints.CUSTOM, null),
 		};
 		
 		//------------------// Skill Matrix //----------------//
@@ -76,6 +86,7 @@ public class DefaultSkillTree
 		skillTree.addDblEdge(skills[15], skills[13].getID());
 		skillTree.addDblEdge(skills[16], skills[13].getID());
 		skillTree.addDblEdge(skills[18], skills[13].getID());
+		skillTree.addDblEdge(skills[19], skills[13].getID());
 		skillTree.addDblEdge(skills[1], skills[0].getID());
 		skillTree.addDblEdge(skills[2], skills[0].getID());
 		skillTree.addDblEdge(skills[3], skills[0].getID());

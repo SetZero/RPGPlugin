@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -39,6 +40,7 @@ public class RPGPlayerStat {
 	private int Shield = 0;													//The current shield amount
 	private ShieldRegenTypes shieldRegenType = ShieldRegenTypes.OFFBATTLE;	//The Shield regeneration Type (On/Offbattle)
 	private int shieldRegen = 2;											//The amount a shield regenerates per second/action
+	private boolean OmniShield = false;										//EnergyShield applies to all damage
 	//TRYOUT: expToLevelUp -- Exp needed to levelup and get skillpoints	
 	private int expToLevelUp = 0;											//The amount of exp for the next Level
 	private FileHandler fh;													//The File Handler for a player to save the data to
@@ -51,6 +53,8 @@ public class RPGPlayerStat {
 	
 	//Settings
 	private boolean showSidebar = false;
+	private UUID playerid = null;
+	private boolean ShowAbsValuesInSidebar = false;
 	
 	public RPGPlayerStat(int str, int dex, int wis, AdjacencyMatrix skillTree, FileHandler fh) {
 		this.str = str;
@@ -284,6 +288,10 @@ public class RPGPlayerStat {
 		bindSkills.put(m, s);
 	}
 	
+	public void removeSkillbind(Material m) {
+		bindSkills.remove(m);
+	}
+	
 	public Skill getSkillbind(Material m) {
 		return bindSkills.get(m);
 	}
@@ -408,20 +416,20 @@ public class RPGPlayerStat {
 	public String printFullLevelProgress() {
 		String fancy = printLevelProgressBar(28);
 		String progress = (expToLevelUp == 0) ? "0" : String.valueOf(Math.round((((double)exp / expToLevelUp) * 100)));
-		return fancy + " (" + progress + "%)";
+		return fancy + " (" + (ShowAbsValuesInSidebar ? exp : progress + "%") + ")";
 	}
 	
 	public String printFullMana(ChatColor color) {
 		String fancy = printManaBar(28, color);
 		String progress = (maxmana == 0) ? "0" : String.valueOf(Math.round((((double)mana / maxmana) * 100)));
-		return fancy + " (" + progress + "%)";
+		return fancy + " (" + (ShowAbsValuesInSidebar ? mana : progress + "%") + ")";
 	}
 	
 
 	public String printFullShield(ChatColor color) {
 		String fancy = printShieldBar(28, color);
 		String progress = (maxShield == 0) ? "0" : String.valueOf(Math.round((((double)Shield / maxShield) * 100)));
-		return fancy + " (" + progress + "%)";
+		return fancy + " (" + (ShowAbsValuesInSidebar ? Shield : progress + "%") + ")";
 	}
 	
 	public void printStats(HumanEntity p) {
@@ -437,6 +445,30 @@ public class RPGPlayerStat {
 		
 		
 		
+	}
+
+	public UUID getPlayerid() {
+		return playerid;
+	}
+
+	public void setPlayerid(UUID playerid) {
+		this.playerid = playerid;
+	}
+
+	public boolean isOmniShield() {
+		return OmniShield;
+	}
+
+	public void setOmniShield(boolean omniShield) {
+		OmniShield = omniShield;
+	}
+
+	public boolean isShowAbsValuesInSidebar() {
+		return ShowAbsValuesInSidebar;
+	}
+
+	public void setShowAbsValuesInSidebar(boolean showAbsValuesInSidebar) {
+		ShowAbsValuesInSidebar = showAbsValuesInSidebar;
 	}
 
 

@@ -11,3 +11,6 @@ commands:
   getskillbook:
     description: Recive a Skillbook
     usage: /getskillbook    
+  sidebardisplay:
+    description: Toggle absolute values in the Sidebar
+    usage: /sidebardisplay [toggleabs]    

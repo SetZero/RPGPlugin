@@ -16,7 +16,7 @@ public class EnergyShield extends PassiveSkillEffects implements Listener{
 	HumanEntity p;
 	
 	private ShieldRegenTypes type = ShieldRegenTypes.OFFBATTLE;
-	Map<HumanEntity, RPGPlayerStat> playerStats;
+	private Map<HumanEntity, RPGPlayerStat> playerStats;
 	private int shieldBonus = 0;
 	
 	public EnergyShield(ShieldRegenTypes type, int shieldBonus, Map<HumanEntity, RPGPlayerStat> playerStats) {

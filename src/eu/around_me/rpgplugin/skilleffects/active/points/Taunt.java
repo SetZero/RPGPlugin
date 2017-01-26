@@ -31,8 +31,8 @@ public class Taunt extends ActiveSkill {
 		prevAmount = 0;
 		
 		skillItem = new ItemStack(Material.GOLD_SWORD);
-		cooldown = 10;
-		manacost = 5;
+		cooldown = 15;
+		manacost = 20;
 	}
 
 	@Override

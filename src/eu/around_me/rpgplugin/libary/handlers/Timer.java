@@ -48,7 +48,7 @@ public class Timer extends BukkitRunnable{
 			 
 			 //Shield Regen
 			 if(stat.getHasShield()) {
-				 if(stat.getOutofcombattimer() >= 20){
+				 if(stat.getOutofcombattimer() >= 4){
 					 if(stat.getShieldRegenType() == ShieldRegenTypes.OFFBATTLE) {
 						 if(stat.getShield() + stat.getShieldRegen() < stat.getMaxShield()) {
 							 stat.setShield(stat.getShield() + stat.getShieldRegen());

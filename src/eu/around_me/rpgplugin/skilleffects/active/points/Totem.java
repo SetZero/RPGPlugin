@@ -33,7 +33,7 @@ public class Totem extends ActiveSkill {
 	ArmorStand as;
 	BukkitTask task;
 	int lifetime = 0;
-	int maxLifetime = 120;
+	int maxLifetime = 20;
 	
 	Plugin plugin;
 	
@@ -47,8 +47,8 @@ public class Totem extends ActiveSkill {
 		req = null;
 		prevReq = false;
 		prevAmount = 0;
-		cooldown = 10;
-		manacost = 25;
+		cooldown = 40;
+		manacost = 75;
 	}
 
 	@Override

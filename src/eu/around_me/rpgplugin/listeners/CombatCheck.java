@@ -38,26 +38,37 @@ public class CombatCheck implements Listener {
 			if (stat != null) {
 				//Check if player has a shield
 				if(stat.getHasShield()) {
-					//don't shield on this damage causes
-					switch(event.getCause()) {
-						case FALL:
-						case DROWNING:
-						case STARVATION:
-						case SUFFOCATION:
-						case SUICIDE:
-						case VOID:
-							return;
-						default:
-							break;
+					//Does the Player have an OmniShield?
+					if(!stat.isOmniShield()) {
+						//don't shield on this damage causes
+						switch(event.getCause()) {
+							case FALL:
+							case DROWNING:
+							case STARVATION:
+							case SUFFOCATION:
+							case SUICIDE:
+							case VOID:
+							case LAVA:
+								return;
+							default:
+								break;
+						}
+					} else {
+						switch(event.getCause()) {
+							case VOID:
+								return;
+							default:
+								break;
+						}
 					}
 					//Check if shield is up
 					if(stat.getShield() > 0) {
 						//Check if shield has enough to bounce of the whole attack
-						if(stat.getShield() > (int)event.getFinalDamage()) {
-							stat.setShield((int) (stat.getShield() - event.getFinalDamage()));
+						if(stat.getShield() > (int)event.getDamage()) {
+							stat.setShield((int) (stat.getShield() - event.getDamage()));
 						} else { 
 							//Else do remove the rest from the healthbar
-							double damage = event.getFinalDamage() - stat.getShield();
+							double damage = event.getFinalDamage() * ((event.getDamage() - stat.getShield()) / event.getDamage());
 							stat.setShield(0);
 							if(p.getHealth() - damage > 0) {
 								p.setHealth(p.getHealth() - damage);

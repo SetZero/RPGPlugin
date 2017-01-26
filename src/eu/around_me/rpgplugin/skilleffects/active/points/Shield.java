@@ -25,8 +25,8 @@ public class Shield extends ActiveSkill {
 		req = null;
 		prevReq = false;
 		prevAmount = 0;
-		cooldown = 4;
-		manacost = 20;
+		cooldown = 15;
+		manacost = 25;
 	}
 
 	@Override

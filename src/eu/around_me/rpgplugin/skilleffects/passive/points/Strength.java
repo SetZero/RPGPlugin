@@ -1,5 +1,7 @@
 package eu.around_me.rpgplugin.skilleffects.passive.points;
 
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -16,7 +18,8 @@ public class Strength extends PassiveSkillEffects implements Listener{
 		// TODO Auto-generated method stub
 		if(p instanceof Player) {
 			Player pl = (Player) p;
-			pl.setMaxHealth(pl.getMaxHealth() + strengthModifier);
+			AttributeInstance health = pl.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+			health.setBaseValue(health.getValue() + strengthModifier);
 		}
 	}
 
@@ -25,7 +28,8 @@ public class Strength extends PassiveSkillEffects implements Listener{
 		// TODO Auto-generated method stub
 		if(p instanceof Player) {
 			Player pl = (Player) p;
-			pl.setMaxHealth(20);
+			AttributeInstance health = pl.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+			health.setBaseValue(20);
 		}
 	}
 

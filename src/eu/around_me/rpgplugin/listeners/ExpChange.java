@@ -43,7 +43,6 @@ public class ExpChange implements Listener {
 				
 				// check for levelup:
 				if (stat.getEXP() >= stat.getExpToLevelUp()) {
-					event.getPlayer().sendMessage(ChatColor.GOLD + "Level Up!");
 					// reset current exp and execute levelUp()
 					if (stat.getExpToLevelUp() == 0)
 						stat.setEXP(0);
@@ -55,7 +54,10 @@ public class ExpChange implements Listener {
 					stat.setExpToLevelUp((int) ((scale * 32) * ((double) puffer / 8)
 							- ((scale - 1) * 32) * (((double) puffer - 1) / 8)));
 					scale++;
-
+					
+					event.getPlayer().sendMessage(ChatColor.GOLD + "Level Up! You are now a lvl. " + ChatColor.RED + stat.getLevel() + ChatColor.GOLD + " Adventurer");
+					event.getPlayer().sendMessage(ChatColor.GOLD + "You have " + ChatColor.RED +
+													stat.getSkillpoints() + ChatColor.GOLD + " free Skillpoints");
 				}
 				stat.getSb().sidebarRefresh();
 			}
