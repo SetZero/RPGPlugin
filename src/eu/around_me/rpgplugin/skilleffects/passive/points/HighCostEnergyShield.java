@@ -45,9 +45,8 @@ public class HighCostEnergyShield extends PassiveSkillEffects{
 		}
 		
 		RPGPlayerStat stat = playerStats.get(p);
-		double shield = (100-shieldbonus) / 100D;
-		int totalshield = (int) ((stat.getMaxShield() - flatamount) * shield);
-		stat.setMaxShield(totalshield);
+		stat.setShield(0);
+		stat.setMaxShield(0);
 	}
 
 }
