@@ -129,6 +129,7 @@ public class CombatCheck implements Listener {
 				
 				
 				stat.setOutofcombattimer(0);
+				stat.getSb().sidebarRefresh();
 			}
 		} 
 		damageCheck(event);

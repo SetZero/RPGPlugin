@@ -51,7 +51,7 @@ public class ExpChange implements Listener {
 					stat.levelUp();
 					p.getWorld().playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 3.0F, 0.5F);
 					// set new expToLevelUp cap
-					stat.setExpToLevelUp((int) ((scale * 32) * ((double) puffer / 8)
+					stat.setExpToLevelUp((int) ((scale * scale * 32) * ((double) puffer / 8)
 							- ((scale - 1) * 32) * (((double) puffer - 1) / 8)));
 					scale++;
 					

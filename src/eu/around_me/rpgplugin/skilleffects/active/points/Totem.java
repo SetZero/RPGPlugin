@@ -8,6 +8,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Monster;
@@ -30,10 +31,11 @@ public class Totem extends ActiveSkill {
 	
 	//Custom
 	private int range = 40;
-	ArmorStand as;
-	BukkitTask task;
-	int lifetime = 0;
-	int maxLifetime = 20;
+	private ArmorStand as;
+	private BukkitTask task;
+	private int lifetime = 0;
+	private int maxLifetime = 20;
+	private int arrowType = 1;		//0 = FireBall, 1 = Arrow
 	
 	Plugin plugin;
 	
@@ -49,6 +51,13 @@ public class Totem extends ActiveSkill {
 		prevAmount = 0;
 		cooldown = 40;
 		manacost = 75;
+	}
+	
+	public Totem(Plugin plugin, int range, int lifetime, int arrowType) {
+		this(plugin);
+		this.range = range;
+		this.lifetime = lifetime;
+		this.arrowType = arrowType;
 	}
 
 	@Override
@@ -160,14 +169,18 @@ public class Totem extends ActiveSkill {
 		shooter.setY(shooter.getY()+1);
 		shooter.setZ(shooter.getZ()+1);
 		
-		//Arrow arrow = as.getWorld().spawnArrow(shooter, fire, 1, 10);
-		//arrow.setShooter(p);
-		//arrow.setVelocity(fire.normalize());
-		SmallFireball fireball = (SmallFireball)as.getWorld().spawn(shooter, SmallFireball.class);
-		fireball.setVelocity(fire);
-		fireball.setShooter(p);
-		fireball.setFireTicks(0);
-		as.launchProjectile(SmallFireball.class, fire);
+		if(arrowType == 1) {
+			Arrow arrow = as.getWorld().spawnArrow(shooter, fire, 1, 10);
+			arrow.setShooter(p);
+			arrow.setVelocity(fire.normalize());
+			as.launchProjectile(Arrow.class, fire);
+		} else {
+			SmallFireball fireball = (SmallFireball)as.getWorld().spawn(shooter, SmallFireball.class);
+			fireball.setVelocity(fire);
+			fireball.setShooter(p);
+			fireball.setFireTicks(0);
+			as.launchProjectile(SmallFireball.class, fire);
+		}
 	
 	}
 	

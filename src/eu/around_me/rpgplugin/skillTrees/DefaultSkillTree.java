@@ -10,6 +10,7 @@ import eu.around_me.rpgplugin.libary.Manatypes;
 import eu.around_me.rpgplugin.libary.ShieldRegenTypes;
 import eu.around_me.rpgplugin.libary.SkillPoints;
 import eu.around_me.rpgplugin.playerstats.RPGPlayerStat;
+import eu.around_me.rpgplugin.skilleffects.active.overtime.points.HealAllyOverTime;
 import eu.around_me.rpgplugin.skilleffects.active.points.Shield;
 import eu.around_me.rpgplugin.skilleffects.active.points.Taunt;
 import eu.around_me.rpgplugin.skilleffects.active.points.Totem;
@@ -66,40 +67,42 @@ public class DefaultSkillTree
 			new PassiveSkillPoint("EnergyShield ENHANCED", "You increase your energy shield by 10",
 					ChatColor.DARK_PURPLE, new EnergyShield(ShieldRegenTypes.OFFBATTLE, 10, playerStats), SkillPoints.CUSTOM, null),
 			new Totem(p),																												
-			new PassiveSkillPoint("Into Battle!", "You regenerate your shield\n now by the damage you dealt",
+			new PassiveSkillPoint("Into Battle!", "You regenerate your shield\n only by the damage you dealt",
 					ChatColor.BLACK, new EnergyShield(ShieldRegenTypes.DAMAGE_DEALT, 5, playerStats), SkillPoints.CUSTOM, null), 		
 			new PassiveSkillPoint("Risky Gamble", "You now have 1 Health,\n but you Energyshield is 20% more efficient\n and you get additional 20 Energy Shield",
 					ChatColor.DARK_RED, new HighCostEnergyShield(playerStats, 0, 20), SkillPoints.CUSTOM, null),
+			new HealAllyOverTime(),
 		};
 		
 		//------------------// Skill Matrix //----------------//
 		skillTree = new AdjacencyMatrix(skills.length);
 
-		skillTree.addDblEdge(skills[0], skills[2].getID());
-		skillTree.addDblEdge(skills[9], skills[0].getID());
-		skillTree.addDblEdge(skills[10], skills[0].getID());
-		skillTree.addDblEdge(skills[11], skills[0].getID());
-		skillTree.addDblEdge(skills[12], skills[0].getID());
-		skillTree.addDblEdge(skills[13], skills[0].getID());
-		skillTree.addDblEdge(skills[17], skills[0].getID());
-		skillTree.addDblEdge(skills[14], skills[13].getID());
-		skillTree.addDblEdge(skills[15], skills[13].getID());
-		skillTree.addDblEdge(skills[16], skills[13].getID());
-		skillTree.addDblEdge(skills[18], skills[13].getID());
-		skillTree.addDblEdge(skills[19], skills[13].getID());
-		skillTree.addDblEdge(skills[1], skills[0].getID());
-		skillTree.addDblEdge(skills[2], skills[0].getID());
-		skillTree.addDblEdge(skills[3], skills[0].getID());
-		skillTree.addDblEdge(skills[3], skills[1].getID());
-		skillTree.addDblEdge(skills[4], skills[2].getID());
-		skillTree.addDblEdge(skills[4], skills[7].getID());
-		skillTree.addDblEdge(skills[4], skills[6].getID());
-		skillTree.addDblEdge(skills[4], skills[5].getID());
-		skillTree.addDblEdge(skills[7], skills[8].getID());
-		skillTree.addDblEdge(skills[8], skills[2].getID());
-		skillTree.addDblEdge(skills[7], skills[4].getID());
-		skillTree.addDblEdge(skills[6], skills[4].getID());
-		skillTree.addDblEdge(skills[5], skills[4].getID());
+		skillTree.addDblEdge(skills[0], skills[2]);
+		skillTree.addDblEdge(skills[9], skills[0]);
+		skillTree.addDblEdge(skills[10], skills[0]);
+		skillTree.addDblEdge(skills[11], skills[0]);
+		skillTree.addDblEdge(skills[12], skills[0]);
+		skillTree.addDblEdge(skills[13], skills[0]);
+		skillTree.addDblEdge(skills[17], skills[0]);
+		skillTree.addDblEdge(skills[20], skills[0]);
+		skillTree.addDblEdge(skills[14], skills[13]);
+		skillTree.addDblEdge(skills[15], skills[13]);
+		skillTree.addDblEdge(skills[16], skills[13]);
+		skillTree.addDblEdge(skills[18], skills[13]);
+		skillTree.addDblEdge(skills[19], skills[13]);
+		skillTree.addDblEdge(skills[1], skills[0]);
+		skillTree.addDblEdge(skills[2], skills[0]);
+		skillTree.addDblEdge(skills[3], skills[0]);
+		skillTree.addDblEdge(skills[3], skills[1]);
+		skillTree.addDblEdge(skills[4], skills[2]);
+		skillTree.addDblEdge(skills[4], skills[7]);
+		skillTree.addDblEdge(skills[4], skills[6]);
+		skillTree.addDblEdge(skills[4], skills[5]);
+		skillTree.addDblEdge(skills[7], skills[8]);
+		skillTree.addDblEdge(skills[8], skills[2]);
+		skillTree.addDblEdge(skills[7], skills[4]);
+		skillTree.addDblEdge(skills[6], skills[4]);
+		skillTree.addDblEdge(skills[5], skills[4]);
 	}
 	
 	public AdjacencyMatrix getSkillTree() {

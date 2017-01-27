@@ -5,6 +5,7 @@ import net.md_5.bungee.api.ChatColor;
 public abstract class Skill {
 	private static int idcounter = 0;
 	private int id = 0;
+	protected int priority = 0;
 	
 	protected String skillName;
 	protected String skillDesc;

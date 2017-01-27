@@ -41,7 +41,6 @@ public class JoinHandler {
 				playerStats.remove(h);
 				p.sendMessage(ChatColor.AQUA + "Welcome back, " + h.getName());
 				Sidebar sb = new Sidebar(playerStats.get(p), p);
-				playerStats.get(p).setSb(sb);
 				
 				List<Skill> learned = playerStats.get(p).getLearnedSkills();
 				for(Skill s : learned) {
@@ -52,6 +51,7 @@ public class JoinHandler {
 							pse.executeEffect(p, plugin);
 					}
 				}
+				playerStats.get(p).setSb(sb);
 				
 				return;
 			}
@@ -67,7 +67,6 @@ public class JoinHandler {
 				playerStats.put(p, ps);
 				
 				Sidebar sb = new Sidebar(playerStats.get(p), p);
-				playerStats.get(p).setSb(sb);
 				
 				List<Skill> learned = playerStats.get(p).getLearnedSkills();
 				for(Skill s : learned) {
@@ -78,7 +77,7 @@ public class JoinHandler {
 							pse2.executeEffect(p, plugin);
 					}
 				}
-				
+				playerStats.get(p).setSb(sb);
 				return;
 			}
 		} catch (InvalidConfigurationException e) {

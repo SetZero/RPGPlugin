@@ -1,6 +1,7 @@
 package eu.around_me.rpgplugin.playerstats;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -14,6 +15,7 @@ import eu.around_me.rpgplugin.libary.Manatypes;
 import eu.around_me.rpgplugin.libary.ShieldRegenTypes;
 import eu.around_me.rpgplugin.libary.userfiles.FileHandler;
 import eu.around_me.rpgplugin.scoreboard.Sidebar;
+import eu.around_me.rpgplugin.skills.OverTimeSkill;
 import eu.around_me.rpgplugin.skills.PassiveSkill;
 import eu.around_me.rpgplugin.skills.PassiveSkillPoint;
 import eu.around_me.rpgplugin.skills.Skill;
@@ -39,7 +41,7 @@ public class RPGPlayerStat {
 	private int maxShield = 0;												//Maximum Shield a Player can regenerate
 	private int Shield = 0;													//The current shield amount
 	private ShieldRegenTypes shieldRegenType = ShieldRegenTypes.OFFBATTLE;	//The Shield regeneration Type (On/Offbattle)
-	private int shieldRegen = 2;											//The amount a shield regenerates per second/action
+	private int shieldRegen = 20;											//The amount(percent) a shield regenerates per second/action
 	private boolean OmniShield = false;										//EnergyShield applies to all damage
 	//TRYOUT: expToLevelUp -- Exp needed to levelup and get skillpoints	
 	private int expToLevelUp = 0;											//The amount of exp for the next Level
@@ -48,7 +50,10 @@ public class RPGPlayerStat {
 	private Map<Material, Skill> bindSkills;								//The bound Skills (to objects)
 	private Map<Skill, Integer> cooldowns;									//The Cooldowns of all Skills
 	
+	private int playerMaxLife = 20;											//Max life a player can get
+	
 	List<Skill> learned = new ArrayList<Skill>();							//The Learned Skills
+	private List<OverTimeSkill> activeOverTimeSkills = new LinkedList<OverTimeSkill>(); //Current Active Skills
 	AdjacencyMatrix skillTree;												//The Skill Tree
 	
 	//Settings
@@ -128,6 +133,7 @@ public class RPGPlayerStat {
 	}
 
 	public void setMana(int mana) {
+		sb.sidebarRefresh();
 		this.mana = mana;
 	}
 
@@ -471,7 +477,22 @@ public class RPGPlayerStat {
 		ShowAbsValuesInSidebar = showAbsValuesInSidebar;
 	}
 
+	public int getPlayerMaxLife() {
+		return playerMaxLife;
+	}
 
+	public void setPlayerMaxLife(int playerMaxLife) {
+		this.playerMaxLife = playerMaxLife;
+	}
 
+	public List<OverTimeSkill> getActiveOverTimeSkills() {
+		return activeOverTimeSkills;
+	}
 
+	public void addActiveOverTimeSkills(OverTimeSkill OverTimeSkill) {
+		this.activeOverTimeSkills.add(OverTimeSkill);
+	}
+	public void removeActiveOverTimeSkills(OverTimeSkill OverTimeSkill) {
+		this.activeOverTimeSkills.remove(OverTimeSkill);
+	}
 }

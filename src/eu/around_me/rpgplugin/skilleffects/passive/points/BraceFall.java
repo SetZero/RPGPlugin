@@ -19,7 +19,7 @@ public class BraceFall extends PassiveSkillEffects implements Listener{
 	
 	private double chance = 100;
 	private double percentage = 50;
-	private double soak = 10;
+	private double soak = 8;
 	
 	public BraceFall() {
 		// TODO Auto-generated constructor stub

@@ -10,7 +10,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 import eu.around_me.rpgplugin.libary.Manatypes;
 import eu.around_me.rpgplugin.libary.ShieldRegenTypes;
 import eu.around_me.rpgplugin.playerstats.RPGPlayerStat;
+import eu.around_me.rpgplugin.skills.OverTimeSkill;
 import eu.around_me.rpgplugin.skills.Skill;
+import net.md_5.bungee.api.ChatColor;
 
 public class Timer extends BukkitRunnable{
 
@@ -28,6 +30,7 @@ public class Timer extends BukkitRunnable{
 		 while (it.hasNext()) {
 			 Entry<HumanEntity, RPGPlayerStat> pair = it.next();
 			 RPGPlayerStat stat = pair.getValue();
+			 HumanEntity player = pair.getKey();
 			 //Mana regen
 			 //If player in has mana regenerate it...
 			 if(stat.getManatype() == Manatypes.MANA) {
@@ -51,7 +54,8 @@ public class Timer extends BukkitRunnable{
 				 if(stat.getOutofcombattimer() >= 4){
 					 if(stat.getShieldRegenType() == ShieldRegenTypes.OFFBATTLE) {
 						 if(stat.getShield() + stat.getShieldRegen() < stat.getMaxShield()) {
-							 stat.setShield(stat.getShield() + stat.getShieldRegen());
+							 int shieldAdd = (int) (stat.getMaxShield() * (stat.getShieldRegen() / 100D));
+							 stat.setShield(stat.getShield() + shieldAdd);
 							 refreshSidebar = true;
 						 } else if(stat.getShield() != stat.getMaxShield()) {
 							 stat.setShield(stat.getMaxShield());
@@ -76,6 +80,31 @@ public class Timer extends BukkitRunnable{
 		    	 s.put(innerpair.getKey(), newvalue);
 		    	 if(newvalue <= 0) {
 		    		 s.remove(innerpair.getKey());
+		    	 }
+		     }
+		     
+		     //Over Time Skills
+		     if(!stat.getActiveOverTimeSkills().isEmpty()) {
+		    	 for(OverTimeSkill ots: stat.getActiveOverTimeSkills()) {
+		    		 if(ots.isActivated()) {
+		    			 if(ots.getTickRemaining() <= 0) {
+		    				 ots.setTickRemaining(ots.getTickTime());
+		    				 if(ots.isManaCostOverTime()) {
+				    			 if(stat.getMana() >= ots.getManacost()) {
+				    				 stat.setMana(stat.getMana() - ots.getManacost());
+				    				 ots.executeActive(stat, player);
+				    			 } else {
+				    				 player.sendMessage(ChatColor.WHITE + "Your skill " + ots.getChatColor() + ots.getName() + ChatColor.WHITE + " ran out because of low mana");
+				    				 stat.removeActiveOverTimeSkills(ots);
+				    				 ots.setActivated(false);
+				    			 }
+		    				 } else {
+		    					 ots.executeActive(stat, player);
+		    				 }
+		    			 } else {
+		    				 ots.setTickRemaining(ots.getTickRemaining() - 1);
+		    			 }
+		    		 }
 		    	 }
 		     }
 		     

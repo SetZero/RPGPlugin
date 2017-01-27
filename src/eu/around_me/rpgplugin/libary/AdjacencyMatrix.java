@@ -34,8 +34,9 @@ public class AdjacencyMatrix {
 		a[j][i] = sk;
 	}
 
-	public void addDblEdge(Skill sk, int j) {
+	public void addDblEdge(Skill sk, Skill sj) {
 		int i = sk.getID();
+		int j = sj.getID();
 		a[i][j] = sk;
 		a[j][i] = sk;
 	}

@@ -8,15 +8,16 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import eu.around_me.rpgplugin.libary.ShieldRegenTypes;
 import eu.around_me.rpgplugin.playerstats.RPGPlayerStat;
-import eu.around_me.rpgplugin.skills.PassiveSkillEffects;
 
-public class HighCostEnergyShield extends PassiveSkillEffects{
+public class HighCostEnergyShield extends EnergyShield{
 	private Map<HumanEntity, RPGPlayerStat> playerStats;
 	private int shieldbonus = 20;
 	private int flatamount = 20;
 
 	public HighCostEnergyShield(Map<HumanEntity, RPGPlayerStat> playerStats, int shieldbonus, int flatamount) {
+		super(ShieldRegenTypes.OFFBATTLE, 0, playerStats);
 		this.playerStats = playerStats;
 		this.shieldbonus = shieldbonus;
 		this.flatamount = flatamount;
