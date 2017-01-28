@@ -31,13 +31,13 @@ public class Sidebar {
 		
 		objective.getScore("Level: " + stat.getLevel()).setScore(8);
 		objective.getScore(stat.printFullLevelProgress()).setScore(7);
-		objective.getScore(stat.printFullMana(stat.getManabarcolor())).setScore(7);
+		objective.getScore(stat.printFullMana(stat.getManabarcolor())).setScore(6);
 		if(stat.getHasShield())
-			objective.getScore(stat.printFullShield(ChatColor.DARK_AQUA)).setScore(7);
-		objective.getScore(ChatColor.WHITE + "    ").setScore(6);
-		objective.getScore(ChatColor.DARK_GREEN + "Dexterity: " + ChatColor.WHITE + stat.getDex()).setScore(5);
-		objective.getScore(ChatColor.DARK_RED + "Strength: " + ChatColor.WHITE + stat.getStr()).setScore(4);
-		objective.getScore(ChatColor.DARK_AQUA + "Intelligence: " + ChatColor.WHITE + stat.getWis()).setScore(3);
+			objective.getScore(stat.printFullShield(ChatColor.DARK_AQUA)).setScore(5);
+		objective.getScore(ChatColor.WHITE + "    ").setScore(4);
+		objective.getScore(ChatColor.DARK_GREEN + "Dexterity: " + ChatColor.WHITE + stat.getDex()).setScore(3);
+		objective.getScore(ChatColor.DARK_RED + "Strength: " + ChatColor.WHITE + stat.getStr()).setScore(2);
+		objective.getScore(ChatColor.DARK_AQUA + "Intelligence: " + ChatColor.WHITE + stat.getWis()).setScore(1);
 		
 		if(player instanceof Player) {
 			Player p = (Player) player;
