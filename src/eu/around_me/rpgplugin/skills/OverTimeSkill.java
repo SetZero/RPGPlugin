@@ -36,5 +36,6 @@ public abstract class OverTimeSkill extends ActiveSkill {
 	}
 	
 	public abstract void firstExecute(RPGPlayerStat stat, HumanEntity p);
+	public abstract void onDeactivation(RPGPlayerStat stat, HumanEntity p);
 	
 }

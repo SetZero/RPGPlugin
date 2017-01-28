@@ -110,6 +110,7 @@ public class SkillTreeMenu implements Listener {
 	}
 	
 	private ItemStack createActive(ItemStack is, int skillcount, String name, String desc, String desc2) {
+		if(is == null) return new ItemStack(Material.BANNER, 1);
 		ItemMeta im = is.getItemMeta();
         im.setDisplayName(name);
 		im.setLore(Arrays.asList(desc, desc2));

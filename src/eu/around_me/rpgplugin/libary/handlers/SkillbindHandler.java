@@ -50,6 +50,8 @@ public class SkillbindHandler implements Listener{
 							} else {
 								p.sendMessage("Deactivated Skill " + s.getChatColor() + s.getName());
 								stat.removeActiveOverTimeSkills((OverTimeSkill)s);
+								((OverTimeSkill) s).setActivated(false);
+								((OverTimeSkill) s).onDeactivation(stat, p);
 							}
 						} else {
 							p.sendMessage("Not enough " + stat.getManabarcolor() + stat.getManaName());

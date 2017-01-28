@@ -10,6 +10,7 @@ import eu.around_me.rpgplugin.libary.Manatypes;
 import eu.around_me.rpgplugin.libary.ShieldRegenTypes;
 import eu.around_me.rpgplugin.libary.SkillPoints;
 import eu.around_me.rpgplugin.playerstats.RPGPlayerStat;
+import eu.around_me.rpgplugin.skilleffects.active.overtime.points.ArrowFall;
 import eu.around_me.rpgplugin.skilleffects.active.overtime.points.HealAllyOverTime;
 import eu.around_me.rpgplugin.skilleffects.active.points.Shield;
 import eu.around_me.rpgplugin.skilleffects.active.points.Taunt;
@@ -72,6 +73,7 @@ public class DefaultSkillTree
 			new PassiveSkillPoint("Risky Gamble", "You now have 1 Health,\n but you Energyshield is 20% more efficient\n and you get additional 20 Energy Shield",
 					ChatColor.DARK_RED, new HighCostEnergyShield(playerStats, 0, 20), SkillPoints.CUSTOM, null),
 			new HealAllyOverTime(),
+			new ArrowFall(),
 		};
 		
 		//------------------// Skill Matrix //----------------//
@@ -85,6 +87,7 @@ public class DefaultSkillTree
 		skillTree.addDblEdge(skills[13], skills[0]);
 		skillTree.addDblEdge(skills[17], skills[0]);
 		skillTree.addDblEdge(skills[20], skills[0]);
+		skillTree.addDblEdge(skills[21], skills[0]);
 		skillTree.addDblEdge(skills[14], skills[13]);
 		skillTree.addDblEdge(skills[15], skills[13]);
 		skillTree.addDblEdge(skills[16], skills[13]);

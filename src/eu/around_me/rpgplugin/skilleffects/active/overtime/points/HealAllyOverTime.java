@@ -32,7 +32,7 @@ public class HealAllyOverTime extends OverTimeSkill{
 		prevReq = false;
 		prevAmount = 0;
 		cooldown = 1;
-		manacost = 25;
+		manacost = 10;
 		
 		tickTime = 1;
 		manaCostOverTime = true;
@@ -66,13 +66,11 @@ public class HealAllyOverTime extends OverTimeSkill{
 
 	@Override
 	public boolean needsUnload() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public void unload() {
-		// TODO Auto-generated method stub
 		
 	}
 	
@@ -94,6 +92,12 @@ public class HealAllyOverTime extends OverTimeSkill{
 	        }
 	    }
 	    return null; //Return null/nothing if no entity was found
+	}
+
+	@Override
+	public void onDeactivation(RPGPlayerStat stat, HumanEntity p) {
+		lockedTarget = null;
+		
 	}
 
 }
