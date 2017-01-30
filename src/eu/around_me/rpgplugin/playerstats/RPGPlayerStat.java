@@ -51,6 +51,10 @@ public class RPGPlayerStat {
 	private Map<Skill, Integer> cooldowns;									//The Cooldowns of all Skills
 	
 	private int playerMaxLife = 20;											//Max life a player can get
+	private double evasionRating = 0.0;										//Evasion Rate of a Player
+	private double critChance = 0.0;										//Crit Chance of a Player
+	private double critMultiplier = 1.5;									//Crit Multi of a Player
+	private double manaLeech = 0;											//Mana Regen by Damage dealt
 	
 	List<Skill> learned = new ArrayList<Skill>();							//The Learned Skills
 	private List<OverTimeSkill> activeOverTimeSkills = new LinkedList<OverTimeSkill>(); //Current Active Skills
@@ -494,5 +498,37 @@ public class RPGPlayerStat {
 	}
 	public void removeActiveOverTimeSkills(OverTimeSkill OverTimeSkill) {
 		this.activeOverTimeSkills.remove(OverTimeSkill);
+	}
+
+	public double getEvasionRating() {
+		return evasionRating;
+	}
+
+	public void setEvasionRating(double evasionRating) {
+		this.evasionRating = evasionRating;
+	}
+
+	public double getCritChance() {
+		return critChance;
+	}
+
+	public void setCritChance(double critChance) {
+		this.critChance = critChance;
+	}
+
+	public double getCritMultiplier() {
+		return critMultiplier;
+	}
+
+	public void setCritMultiplier(double critMultiplier) {
+		this.critMultiplier = critMultiplier;
+	}
+
+	public double getManaLeech() {
+		return manaLeech;
+	}
+
+	public void setManaLeech(double manaLeech) {
+		this.manaLeech = manaLeech;
 	}
 }

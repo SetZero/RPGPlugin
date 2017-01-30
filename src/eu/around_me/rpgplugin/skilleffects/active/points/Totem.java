@@ -14,6 +14,9 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.SmallFireball;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.Plugin;
@@ -25,7 +28,7 @@ import eu.around_me.rpgplugin.playerstats.RPGPlayerStat;
 import eu.around_me.rpgplugin.skills.ActiveSkill;
 import net.md_5.bungee.api.ChatColor;
 
-public class Totem extends ActiveSkill {
+public class Totem extends ActiveSkill  implements Listener {
 
 
 	
@@ -51,6 +54,8 @@ public class Totem extends ActiveSkill {
 		prevAmount = 0;
 		cooldown = 40;
 		manacost = 75;
+
+		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 	
 	public Totem(Plugin plugin, int range, int lifetime, int arrowType) {
@@ -58,6 +63,7 @@ public class Totem extends ActiveSkill {
 		this.range = range;
 		this.lifetime = lifetime;
 		this.arrowType = arrowType;
+		
 	}
 
 	@Override
@@ -77,6 +83,15 @@ public class Totem extends ActiveSkill {
 			task.cancel();
 		if(as != null)
 			as.remove();
+	}
+	
+	
+	@EventHandler
+	public void onPlayerArmorStandManipulateEvent(PlayerArmorStandManipulateEvent event) {
+		if(event.getRightClicked() == as) {
+			event.getPlayer().sendMessage(ChatColor.RED + "You can't manipulate your Totem!");
+			event.setCancelled(true);
+		}
 	}
 	
 	public void placeTotem(HumanEntity p, RPGPlayerStat stat) {
@@ -108,8 +123,6 @@ public class Totem extends ActiveSkill {
 			as.setItemInHand(new ItemStack(Material.BOW));
 			as.setCustomName(ChatColor.RED + pl.getName() + "'s Totem");
 			as.setCustomNameVisible(true);
-			//as.setMaxHealth((stat.getWis()+1)*2);
-			as.setHealth((stat.getWis()+1)*2);
 			as.setCollidable(true);
 			as.setLeashHolder(p);
 			as.setRemoveWhenFarAway(true);

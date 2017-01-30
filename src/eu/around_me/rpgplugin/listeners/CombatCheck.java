@@ -1,6 +1,7 @@
 package eu.around_me.rpgplugin.listeners;
 
 import java.util.Map;
+import java.util.Random;
 
 import org.bukkit.Sound;
 import org.bukkit.entity.HumanEntity;
@@ -14,6 +15,7 @@ import org.bukkit.util.Vector;
 import eu.around_me.rpgplugin.libary.Manatypes;
 import eu.around_me.rpgplugin.libary.ShieldRegenTypes;
 import eu.around_me.rpgplugin.playerstats.RPGPlayerStat;
+import net.md_5.bungee.api.ChatColor;
 
 /**
  * Combat Check (for AGGRO and Shield)
@@ -61,6 +63,15 @@ public class CombatCheck implements Listener {
 								break;
 						}
 					}
+					//Evasion
+					if(stat.getEvasionRating() > 0) {
+						Random r = new Random();
+						//Success!
+						if(stat.getEvasionRating() >= r.nextDouble()) {
+							p.sendMessage(ChatColor.DARK_GREEN + "Evaded!");
+							event.setDamage(0);
+						}
+					}
 					//Check if shield is up
 					if(stat.getShield() > 0) {
 						//Check if shield has enough to bounce of the whole attack
@@ -101,6 +112,20 @@ public class CombatCheck implements Listener {
 			HumanEntity p = (HumanEntity) event.getDamager();
 			RPGPlayerStat stat = playerStats.get(p);
 			if (stat != null) {
+				//Crits
+				if(stat.getCritChance() > 0) {
+					Random r = new Random();
+					//Success!
+					if(stat.getCritChance() >= r.nextDouble()) {
+						p.sendMessage(ChatColor.RED + "Critical Hit!");
+						double dmg = event.getDamage() * stat.getCritMultiplier();
+						event.setDamage(dmg);
+					}
+				}
+				//Mana Leech
+				if(stat.getManaLeech() > 0) {
+					stat.setMana(stat.getMana() + (int) (event.getDamage() * stat.getManaLeech()));
+				}
 				//regenerate aggro if player is in combat
 				if(stat.getManatype() == Manatypes.AGGRO) {
 					if(stat.getMaxmana() >= stat.getMana() + stat.getManaregen()) {

@@ -16,9 +16,14 @@ import eu.around_me.rpgplugin.skilleffects.active.points.Shield;
 import eu.around_me.rpgplugin.skilleffects.active.points.Taunt;
 import eu.around_me.rpgplugin.skilleffects.active.points.Totem;
 import eu.around_me.rpgplugin.skilleffects.passive.points.BraceFall;
+import eu.around_me.rpgplugin.skilleffects.passive.points.CritChance;
 import eu.around_me.rpgplugin.skilleffects.passive.points.EnergyShield;
+import eu.around_me.rpgplugin.skilleffects.passive.points.EvasionChance;
 import eu.around_me.rpgplugin.skilleffects.passive.points.HighCostEnergyShield;
+import eu.around_me.rpgplugin.skilleffects.passive.points.ManaLeech;
 import eu.around_me.rpgplugin.skilleffects.passive.points.ManaType;
+import eu.around_me.rpgplugin.skilleffects.passive.points.StrongerArmor;
+import eu.around_me.rpgplugin.skilleffects.passive.points.UndeadResistance;
 import eu.around_me.rpgplugin.skills.PassiveSkillPoint;
 import eu.around_me.rpgplugin.skills.Skill;
 import net.md_5.bungee.api.ChatColor;
@@ -74,6 +79,28 @@ public class DefaultSkillTree
 					ChatColor.DARK_RED, new HighCostEnergyShield(playerStats, 0, 20), SkillPoints.CUSTOM, null),
 			new HealAllyOverTime(),
 			new ArrowFall(),
+			new PassiveSkillPoint("Tough Armor", "You get 20% less total damage",
+					ChatColor.AQUA, new StrongerArmor(p), SkillPoints.CUSTOM, null),
+			new PassiveSkillPoint("Undead Resistance", "You get 20% less damage from Undead Monsters",
+					ChatColor.BLACK, new UndeadResistance(p), SkillPoints.CUSTOM, null),
+			new PassiveSkillPoint("Crit Master", "You get additional 1% Critical Hit Chance!",
+					ChatColor.DARK_RED, new CritChance(0.05, playerStats), SkillPoints.CUSTOM, null),
+			new PassiveSkillPoint("Crit Master", "You get additional 3% Critical Hit Chance!",
+					ChatColor.DARK_RED, new CritChance(0.02, playerStats), SkillPoints.CUSTOM, null),
+			new PassiveSkillPoint("Crit Master", "You get additional 3% Critical Hit Chance!",
+					ChatColor.DARK_RED, new CritChance(0.02, playerStats), SkillPoints.CUSTOM, null),
+			new PassiveSkillPoint("Evasion Master", "You get additional 1% Evasion Rating!",
+					ChatColor.DARK_GREEN, new EvasionChance(0.05, playerStats), SkillPoints.CUSTOM, null),
+			new PassiveSkillPoint("Evasion Master", "You get additional 3% Evasion Rating!",
+					ChatColor.DARK_GREEN, new EvasionChance(0.02, playerStats), SkillPoints.CUSTOM, null),
+			new PassiveSkillPoint("Evasion Master", "You get additional 3% Evasion Rating!",
+					ChatColor.DARK_GREEN, new EvasionChance(0.02, playerStats), SkillPoints.CUSTOM, null),
+			new PassiveSkillPoint("Mana Leech", "You get additional 10% Mana Leech!",
+					ChatColor.AQUA, new ManaLeech(0.1, playerStats), SkillPoints.CUSTOM, null),
+			new PassiveSkillPoint("Mana Leech", "You get additional 5% Mana Leech!",
+					ChatColor.AQUA, new ManaLeech(0.05, playerStats), SkillPoints.CUSTOM, null),
+			new PassiveSkillPoint("Mana Leech", "You get additional 5% Mana Leech!",
+					ChatColor.AQUA, new ManaLeech(0.05, playerStats), SkillPoints.CUSTOM, null),
 		};
 		
 		//------------------// Skill Matrix //----------------//
@@ -88,6 +115,17 @@ public class DefaultSkillTree
 		skillTree.addDblEdge(skills[17], skills[0]);
 		skillTree.addDblEdge(skills[20], skills[0]);
 		skillTree.addDblEdge(skills[21], skills[0]);
+		skillTree.addDblEdge(skills[22], skills[0]);
+		skillTree.addDblEdge(skills[23], skills[0]);
+		skillTree.addDblEdge(skills[24], skills[0]);
+		skillTree.addDblEdge(skills[25], skills[24]);
+		skillTree.addDblEdge(skills[26], skills[24]);
+		skillTree.addDblEdge(skills[27], skills[0]);
+		skillTree.addDblEdge(skills[28], skills[27]);
+		skillTree.addDblEdge(skills[29], skills[27]);
+		skillTree.addDblEdge(skills[30], skills[0]);
+		skillTree.addDblEdge(skills[31], skills[30]);
+		skillTree.addDblEdge(skills[32], skills[30]);
 		skillTree.addDblEdge(skills[14], skills[13]);
 		skillTree.addDblEdge(skills[15], skills[13]);
 		skillTree.addDblEdge(skills[16], skills[13]);
