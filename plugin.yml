@@ -14,3 +14,6 @@ commands:
   sidebardisplay:
     description: Toggle absolute values in the Sidebar
     usage: /sidebardisplay [toggleabs]    
+  dbgcmd:
+    description: Admin Commands
+    usage: /dbgcmd [crit|evasion]    

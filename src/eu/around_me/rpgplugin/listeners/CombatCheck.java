@@ -5,6 +5,7 @@ import java.util.Random;
 
 import org.bukkit.Sound;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -38,6 +39,32 @@ public class CombatCheck implements Listener {
 			
 			//Check if player exists
 			if (stat != null) {
+				
+				//sync life with mana
+				if(stat.getManatype() == Manatypes.LIFE) {
+					stat.setMana((int) p.getHealth());
+				}
+				
+				//If it was done by a Entity (Player, Mob, etc), do a knockback
+				if(event instanceof EntityDamageByEntityEvent) {
+					
+					//Evasion
+					if(stat.getEvasionRating() > 0) {
+						Random r = new Random();
+						//Success!
+						if(stat.getEvasionRating() >= r.nextDouble()) {
+							p.sendMessage(ChatColor.DARK_GREEN + "Evaded!");
+							p.getWorld().playSound(p.getLocation(), Sound.BLOCK_NOTE_BASEDRUM, 3.0F, 0.5F);
+							event.setDamage(0);
+						}
+					}
+					
+					EntityDamageByEntityEvent newEvent = (EntityDamageByEntityEvent) event;
+					double distance = 0.5;
+					Vector knockbackVector = newEvent.getDamager().getLocation().getDirection().multiply(distance *1.2).setY(distance);
+			        p.setVelocity(knockbackVector);
+				}
+				
 				//Check if player has a shield
 				if(stat.getHasShield()) {
 					//Does the Player have an OmniShield?
@@ -63,17 +90,8 @@ public class CombatCheck implements Listener {
 								break;
 						}
 					}
-					//Evasion
-					if(stat.getEvasionRating() > 0) {
-						Random r = new Random();
-						//Success!
-						if(stat.getEvasionRating() >= r.nextDouble()) {
-							p.sendMessage(ChatColor.DARK_GREEN + "Evaded!");
-							event.setDamage(0);
-						}
-					}
 					//Check if shield is up
-					if(stat.getShield() > 0) {
+					if(stat.getShield() > 0 && (int)event.getDamage() > 0) {
 						//Check if shield has enough to bounce of the whole attack
 						if(stat.getShield() > (int)event.getDamage()) {
 							stat.setShield((int) (stat.getShield() - event.getDamage()));
@@ -89,18 +107,11 @@ public class CombatCheck implements Listener {
 						}
 						//refresh sidebar
 						stat.getSb().sidebarRefresh();
-						//If it was done by a Entity (Player, Mob, etc), do a knockback
-						if(event instanceof EntityDamageByEntityEvent) {
-							EntityDamageByEntityEvent newEvent = (EntityDamageByEntityEvent) event;
-							double distance = 0.5;
-							Vector knockbackVector = newEvent.getDamager().getLocation().getDirection().multiply(distance *1.5).setY(distance);
-					        p.setVelocity(knockbackVector);
-						}
 						//Play a Damage sound
 				        p.getWorld().playSound(p.getLocation(), Sound.BLOCK_GLASS_BREAK, 3.0F, 0.5F);
 						event.setCancelled(true);
 					}
-				} 
+				}
 				stat.setOutofcombattimer(0);
 			}
 		}
@@ -113,48 +124,49 @@ public class CombatCheck implements Listener {
 			RPGPlayerStat stat = playerStats.get(p);
 			if (stat != null) {
 				//Crits
-				if(stat.getCritChance() > 0) {
-					Random r = new Random();
-					//Success!
-					if(stat.getCritChance() >= r.nextDouble()) {
-						p.sendMessage(ChatColor.RED + "Critical Hit!");
-						double dmg = event.getDamage() * stat.getCritMultiplier();
-						event.setDamage(dmg);
+				if(event.getEntity() instanceof LivingEntity) {
+					if(stat.getCritChance() > 0) {
+						Random r = new Random();
+						//Success!
+						if(stat.getCritChance() >= r.nextDouble()) {
+							p.sendMessage(ChatColor.RED + "Critical Hit!");
+							double dmg = event.getDamage() * stat.getCritMultiplier();
+							event.setDamage(dmg);
+						}
 					}
-				}
-				//Mana Leech
-				if(stat.getManaLeech() > 0) {
-					stat.setMana(stat.getMana() + (int) (event.getDamage() * stat.getManaLeech()));
-				}
-				//regenerate aggro if player is in combat
-				if(stat.getManatype() == Manatypes.AGGRO) {
-					if(stat.getMaxmana() >= stat.getMana() + stat.getManaregen()) {
-						stat.setMana(stat.getMana() + stat.getManaregen());
-						stat.getSb().sidebarRefresh();
+					//Mana Leech
+					if(stat.getManaLeech() > 0) {
+						stat.setMana(stat.getMana() + (int) (event.getDamage() * stat.getManaLeech()));
 					}
-				}
-				
-				//Regenerate Shield during Battle
-				if(stat.getShieldRegenType() == ShieldRegenTypes.BATTLE) {
-					if(stat.getShield() + stat.getShieldRegen() <= stat.getMaxShield()) {
-						stat.setShield(stat.getShield() + stat.getShieldRegen());
-					} else {
-						stat.setShield(stat.getMaxShield());
+					//regenerate aggro if player is in combat
+					if(stat.getManatype() == Manatypes.AGGRO) {
+						if(stat.getMaxmana() >= stat.getMana() + stat.getManaregen()) {
+							stat.setMana(stat.getMana() + stat.getManaregen());
+						}
 					}
-				}
-				if(stat.getShieldRegenType() == ShieldRegenTypes.DAMAGE_DEALT) {
-					double dmg = event.getFinalDamage();
-					int regen = (int)(dmg / 2 * stat.getShieldRegen());
-					if(stat.getShield() + regen <= stat.getMaxShield()) {
-						stat.setShield(stat.getShield() + regen);
-					} else {
-						stat.setShield(stat.getMaxShield());
+					
+					//Regenerate Shield during Battle
+					if(stat.getShieldRegenType() == ShieldRegenTypes.BATTLE) {
+						if(stat.getShield() + stat.getShieldRegen() <= stat.getMaxShield()) {
+							stat.setShield(stat.getShield() + stat.getShieldRegen());
+						} else {
+							stat.setShield(stat.getMaxShield());
+						}
 					}
+					if(stat.getShieldRegenType() == ShieldRegenTypes.DAMAGE_DEALT) {
+						double dmg = event.getFinalDamage();
+						int regen = (int)(dmg / 2 * stat.getShieldRegen());
+						if(stat.getShield() + regen <= stat.getMaxShield()) {
+							stat.setShield(stat.getShield() + regen);
+						} else {
+							stat.setShield(stat.getMaxShield());
+						}
+					}
+					
+					
+					stat.setOutofcombattimer(0);
+					stat.getSb().sidebarRefresh();
 				}
-				
-				
-				stat.setOutofcombattimer(0);
-				stat.getSb().sidebarRefresh();
 			}
 		} 
 		damageCheck(event);

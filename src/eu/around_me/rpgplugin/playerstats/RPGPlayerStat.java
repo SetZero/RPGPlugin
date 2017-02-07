@@ -55,6 +55,7 @@ public class RPGPlayerStat {
 	private double critChance = 0.0;										//Crit Chance of a Player
 	private double critMultiplier = 1.5;									//Crit Multi of a Player
 	private double manaLeech = 0;											//Mana Regen by Damage dealt
+	private double manaCostMulti = 1;									//Mana Cost Multiplier
 	
 	List<Skill> learned = new ArrayList<Skill>();							//The Learned Skills
 	private List<OverTimeSkill> activeOverTimeSkills = new LinkedList<OverTimeSkill>(); //Current Active Skills
@@ -165,6 +166,8 @@ public class RPGPlayerStat {
 				return "Energy";
 			case AGGRO:
 				return "Aggression";
+			case LIFE:
+				return "Life";
 			default:
 				return "Unknown";
 		}
@@ -202,6 +205,8 @@ public class RPGPlayerStat {
 			return ChatColor.YELLOW;
 		case AGGRO:
 			return ChatColor.DARK_RED;
+		case LIFE:
+			return ChatColor.RED;
 		default:
 			return manabarcolor;
 	}
@@ -452,6 +457,8 @@ public class RPGPlayerStat {
 		p.sendMessage(ChatColor.DARK_AQUA + "Intelligence: " + ChatColor.WHITE + wis);
 		p.sendMessage(ChatColor.DARK_GREEN + "Dexterity: " + ChatColor.WHITE + dex);
 		p.sendMessage("----------------");
+		p.sendMessage(ChatColor.DARK_GREEN + "Evasion Rating: " + ChatColor.WHITE + Math.round(evasionRating*100) + "%");
+		p.sendMessage(ChatColor.DARK_RED + "Critical Strike Chance: " + ChatColor.WHITE +  Math.round(critChance*100) + "%");
 		
 		
 		
@@ -530,5 +537,13 @@ public class RPGPlayerStat {
 
 	public void setManaLeech(double manaLeech) {
 		this.manaLeech = manaLeech;
+	}
+
+	public double getManaCostMulti() {
+		return manaCostMulti;
+	}
+
+	public void setManaCostMulti(double manaCostMulti) {
+		this.manaCostMulti = manaCostMulti;
 	}
 }

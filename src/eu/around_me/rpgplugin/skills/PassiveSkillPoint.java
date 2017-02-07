@@ -45,7 +45,7 @@ public class PassiveSkillPoint extends PassiveSkill {
 		this(effect, type, requirements);
 		this.name = name;
 		this.description = desc;
-		//this.color = color;
+		this.color = color;
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class PassiveSkillPoint extends PassiveSkill {
 				case DEX:
 					return "You become Stronger";
 				case INT:
-					return "You are more Inteligent";
+					return "You are more Intelligent";
 				default:
 					return "Unknown";
 			}
@@ -130,7 +130,7 @@ public class PassiveSkillPoint extends PassiveSkill {
 	}
 
 	public DyeColor getItemColor() {
-		if(color == null) {
+		if(itemColor == null) {
 			switch(type) {
 				case STR:
 					return DyeColor.RED;

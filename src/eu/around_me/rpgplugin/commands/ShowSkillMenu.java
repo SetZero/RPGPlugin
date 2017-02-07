@@ -34,26 +34,6 @@ public class ShowSkillMenu implements CommandExecutor{
 			}
 			
 			playermenu.show(p);
-			/*ItemStack epic = new ItemStack(Material.BOOK);
-	        ItemMeta bm = epic.getItemMeta();
-	        bm.setDisplayName("Skill Book");
-	        List<String> lore = new LinkedList<String>();
-	        lore.add("Use this book to view you stats!");
-	        bm.setLore(lore);
-	        epic.setItemMeta(bm);
-			
-			final int size = p.getInventory().getContents().length;
-			if(size < 54){
-                p.getInventory().addItem(epic);
-                return true;
-            }
-			for(ItemStack item : p.getInventory().getContents())
-                if(item != null && item == epic && item.getAmount() < 64){
-                    p.getInventory().addItem(epic);
-                    return true;
-                }
-			p.getWorld().dropItem(p.getLocation(), epic);
-			p.sendMessage(ChatColor.GRAY + "You  got your Book!" );*/
 		}
 		return true;
 	}

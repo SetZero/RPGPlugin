@@ -91,7 +91,7 @@ public class Timer extends BukkitRunnable{
 		    				 ots.setTickRemaining(ots.getTickTime());
 		    				 if(ots.isManaCostOverTime()) {
 				    			 if(stat.getMana() >= ots.getManacost()) {
-				    				 stat.setMana(stat.getMana() - ots.getManacost());
+				    				 stat.setMana((int) (stat.getMana() - ots.getManacost()*stat.getManaCostMulti()));
 				    				 ots.executeActive(stat, player);
 				    			 } else {
 				    				 player.sendMessage(ChatColor.WHITE + "Your skill " + ots.getChatColor() + ots.getName() + ChatColor.WHITE + " ran out because of low mana");

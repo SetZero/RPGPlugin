@@ -8,6 +8,7 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import eu.around_me.rpgplugin.commands.AdminCMD;
 import eu.around_me.rpgplugin.commands.ShowSkillMenu;
 import eu.around_me.rpgplugin.commands.SidebarCommand;
 import eu.around_me.rpgplugin.commands.SidebarDisplay;
@@ -48,6 +49,7 @@ public class RPGPluginMain extends JavaPlugin {
 		this.getCommand("togglesidebar").setExecutor(new SidebarCommand(playerStats));
 		this.getCommand("sidebardisplay").setExecutor(new SidebarDisplay(playerStats));
 		this.getCommand("showskillmenu").setExecutor(new ShowSkillMenu(playerStats, this));
+		this.getCommand("dbgcmd").setExecutor(new AdminCMD(playerStats));
 		
 		getServer().getPluginManager().registerEvents(new SkillbindHandler(playerStats), this);
 		getServer().getPluginManager().registerEvents(new CombatCheck(playerStats), this);

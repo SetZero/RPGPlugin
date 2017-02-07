@@ -2,6 +2,7 @@ package eu.around_me.rpgplugin.skilleffects.passive.points;
 
 import java.util.Map;
 
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -29,8 +30,14 @@ public class ManaType extends PassiveSkillEffects implements Listener{
 		this.p = p;
 		
 		RPGPlayerStat stat = playerStats.get(p);
-		if(stat != null)
+		if(stat != null) {
 			stat.setManatype(type);
+			if(type == Manatypes.LIFE) {
+				int maxhealth = (int) p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+				stat.setMaxmana(maxhealth);
+				stat.setMana((int) p.getHealth());
+			}
+		}
 	}
 
 	@Override

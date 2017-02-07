@@ -107,11 +107,5 @@ public class MainMenu implements Listener {
 			e.setCancelled(true);
 			e.getWhoClicked().closeInventory();
 		}
-		/*if(e.getCurrentItem().getItemMeta().getDisplayName().contains("Level Up")) {
-			e.setCancelled(true);
-			e.getWhoClicked().sendMessage("You feel much better now!");
-			stat.get(e.getWhoClicked()).levelUp();
-			e.getWhoClicked().closeInventory();
-		}*/
 	}
 }

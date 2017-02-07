@@ -9,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import eu.around_me.rpgplugin.libary.Manatypes;
 import eu.around_me.rpgplugin.playerstats.RPGPlayerStat;
 import eu.around_me.rpgplugin.skills.ActiveSkill;
 import eu.around_me.rpgplugin.skills.OverTimeSkill;
@@ -41,7 +42,7 @@ public class SkillbindHandler implements Listener{
 				if(s instanceof OverTimeSkill) {
 					OverTimeSkill as = (OverTimeSkill) s;
 					if(stat.getCooldown(s) <= 0) {
-						if(as.getManacost() <= stat.getMana()) {
+						if(as.getManacost()*stat.getManaCostMulti() <= stat.getMana()) {
 							if(!stat.getActiveOverTimeSkills().contains(s)) {
 								p.sendMessage("Activated Skill " + s.getChatColor() + s.getName());
 								stat.addActiveOverTimeSkills((OverTimeSkill)s);
@@ -62,11 +63,11 @@ public class SkillbindHandler implements Listener{
 				} else {
 					ActiveSkill as = (ActiveSkill) s;
 					if(stat.getCooldown(s) <= 0) {
-						if(as.getManacost() <= stat.getMana()) {
+						if(as.getManacost()*stat.getManaCostMulti() <= stat.getMana()) {
 							if(as.executeActive(stat, (HumanEntity)p)) {
 								p.sendMessage("Called Skill: " + as.getChatColor() + as.getName());
 								stat.setCooldowns(as, as.getCooldown());
-								stat.setMana(stat.getMana() - as.getManacost());
+								stat.setMana((int) (stat.getMana() - as.getManacost()*stat.getManaCostMulti()));
 							} else {
 								p.sendMessage(ChatColor.DARK_RED + "There was an error while executing this skill!");
 							}
@@ -76,6 +77,9 @@ public class SkillbindHandler implements Listener{
 					} else {
 						p.sendMessage(as.getChatColor() + as.getName() + ChatColor.WHITE + " is not ready yet! (" + stat.getCooldown(as) + "s)");
 					}
+				}
+				if(stat.getManatype() == Manatypes.LIFE) {
+					p.setHealth(stat.getMana());
 				}
 			}
 		//} 

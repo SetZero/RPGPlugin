@@ -100,7 +100,9 @@ public class DefaultSkillTree
 			new PassiveSkillPoint("Mana Leech", "You get additional 5% Mana Leech!",
 					ChatColor.AQUA, new ManaLeech(0.05, playerStats), SkillPoints.CUSTOM, null),
 			new PassiveSkillPoint("Mana Leech", "You get additional 5% Mana Leech!",
-					ChatColor.AQUA, new ManaLeech(0.05, playerStats), SkillPoints.CUSTOM, null),
+					ChatColor.AQUA, new ManaLeech(0.05, playerStats), SkillPoints.CUSTOM, null),	
+			//new PassiveSkillPoint("Blood Magic", "Removes your Mana. You now spend Life instead",			//gliched af!
+			//		ChatColor.RED, new ManaType(Manatypes.LIFE, playerStats), SkillPoints.CUSTOM, null),
 		};
 		
 		//------------------// Skill Matrix //----------------//
@@ -126,6 +128,7 @@ public class DefaultSkillTree
 		skillTree.addDblEdge(skills[30], skills[0]);
 		skillTree.addDblEdge(skills[31], skills[30]);
 		skillTree.addDblEdge(skills[32], skills[30]);
+		//skillTree.addDblEdge(skills[33], skills[0]);
 		skillTree.addDblEdge(skills[14], skills[13]);
 		skillTree.addDblEdge(skills[15], skills[13]);
 		skillTree.addDblEdge(skills[16], skills[13]);
